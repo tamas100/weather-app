@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Időjárás</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="section-search">
+        <div id="h1">
+          <h1>Időjárás</h1>
+        </div>
+        <form id="search" action="#" class="js-city-form city-form">
+          <label class="city-label">
+            Város:
+            <input
+              type="text"
+              name="city"
+              placeholder="Ide írd a keresett várost!"
+              class="form-input"
+            />
+          </label>
+          <button class="js-submit btn btn-primary" type="submit">
+            Keresés
+          </button>
+        </form>
+      </section>
+      <section class="js-error error"></section>
+      <section class="js-city-weather city-weather">
+        <div class="today"></div>
+        <div class="current"></div>
+        <div class="forecast"></div>
+      </section>
+    </main>
+    <footer>
+      <p>2023 Kis Tamás</p>
+      <a href="#" target="_blank"
+        ><i class="bi bi-github btn btn-primary"></i
+      ></a>
+      <a href="#h1"><i class="bi bi-arrow-up nav-top"></i></a>
+    </footer>
+    <script src="./main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+/* ------------- Colors --------------------------------------*/
+:root {
+  --main-red: #ef476f;
+  --main-yellow: #ffd166;
+  --main-green: #06d6a0;
+  --main-blue: #118ab2;
+  --main-grey: #073b4c;
+  --main-white: ghostwhite;
+  --light-grey: #55595c;
+  --very-light-grey: #ced4da;
+  --very-light-grey-2: #f7f7f9;
+  --light-grey-2: #c6c6c6;
+}
+
+/* -------------- Reset --------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+/* html, */
+body {
+  scroll-behavior: smooth;
+}
