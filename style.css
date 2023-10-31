@@ -19,9 +19,30 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
+  border: 1px solid red;
 }
 
 /* html, */
 body {
   scroll-behavior: smooth;
+}
+
+h1 {
+  display: inline-block;
+  padding: 1.6rem;
+  font-size: 5.6rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 3.3rem;
+}
+
+h3 {
+  font-size: 2.6rem;
+}
+
+p,
+a {
+  font-size: 2rem;
 }

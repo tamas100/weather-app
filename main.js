@@ -7,7 +7,6 @@ function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
 }
 
-
 function fetchPosition(position) {
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
@@ -22,12 +21,14 @@ const position = navigator.geolocation.getCurrentPosition(fetchPosition);
 function renderWeather(weather) {
     let html = `
         <h2>${weather.location.name}</h2>
-        <p>${weather.current.temp_c}°C</p>
+        <div>
+            <h1>${weather.current.temp_c}°C</h1>
+            <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
+        </div>
         <p>${weather.forecast.forecastday[0].day.mintemp_c}°C - ${weather.forecast.forecastday[0].day.maxtemp_c}°C</p>
+        <p>${weather.current.condition.text}</p>
         <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
         <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>
-        <p>${weather.current.condition.text}</p>
-        <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
     `;
     return html;
 }
