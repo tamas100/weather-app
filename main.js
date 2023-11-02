@@ -6,6 +6,8 @@ const $errorSection = document.querySelector(".error");
 // const saveButton = document.querySelector(".js-save-city");
 const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
+const $savedCitiesContainer = document.querySelector(".js-saved-cities");
+const $locationName = document.querySelector(".js-location-name");
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -22,23 +24,30 @@ function fetchPosition(position) {
 
 const position = navigator.geolocation.getCurrentPosition(fetchPosition);
 
+function makeSavedCityButtons(savedCities) {
+    let html = '';
+    if (savedCities.length > 0) {
+        for (let city of savedCities) {
+            html += `<button class="btn btn-primary">${city}</button>`
+        }
+    }
+    return html;
+}
+
 function saveCity(event) {
     // Ellenőrizd, hogy van-e érvényes időjárásadat az oldalon
     const weatherElement = document.querySelector('.weather-div');
     if (weatherElement) {
-        const cityName = weatherElement.querySelector('h2').innerText;
+        const cityName = $locationName.innerText;
         if (!savedCities.includes(cityName) && savedCities.length < 3) { savedCities.push(cityName) };
     }
     console.log('Mentett városok:', savedCities);
+    $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
 }
 
 
 function renderWeather(weather) {
-    let html = `
-        <div>
-            <h2>${weather.location.name}</h2>
-                <button class="js-save-city save-city" type="button">Mentés</button>        
-        </div>
+    let html = `        
         <div>
             <h1>${weather.current.temp_c}°C</h1>
             <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
@@ -56,6 +65,7 @@ function renderResponse(weather) {
     // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
     if (!weather.error) {
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
+        $locationName.innerHTML = weather.location.name;
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!</p>`;
     }

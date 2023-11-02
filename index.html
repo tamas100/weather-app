@@ -29,14 +29,19 @@
               class="form-input"
             />
           </label>
-          <button class="js-submit btn btn-primary" type="submit">
+          <button class="js-submit submit btn btn-primary" type="submit">
             Keresés
           </button>
           <p>A keresett várost (max. hármat) el is mentheted!</p>
-          <button class="js-save-city-b save-city-b" type="button">
+          <h2 class="js-location-name location-name"></h2>
+          <button
+            class="js-save-city-b save-city-b btn btn-primary"
+            type="button"
+          >
             Mentés
           </button>
         </form>
+        <div class="js-saved-cities saved-cities"></div>
       </section>
       <section class="js-error error"></section>
       <section class="js-city-weather city-weather"></section>
