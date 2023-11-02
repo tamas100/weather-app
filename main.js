@@ -1,7 +1,11 @@
+
 const $form = document.querySelector(".js-city-form");
 const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
+// const saveButton = document.querySelector(".js-save-city");
+const $saveButton = document.querySelector(".js-save-city-b");
+const savedCities = [];
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -18,9 +22,23 @@ function fetchPosition(position) {
 
 const position = navigator.geolocation.getCurrentPosition(fetchPosition);
 
+function saveCity(event) {
+    // Ellenőrizd, hogy van-e érvényes időjárásadat az oldalon
+    const weatherElement = document.querySelector('.weather-div');
+    if (weatherElement) {
+        const cityName = weatherElement.querySelector('h2').innerText;
+        if (!savedCities.includes(cityName) && savedCities.length < 3) { savedCities.push(cityName) };
+    }
+    console.log('Mentett városok:', savedCities);
+}
+
+
 function renderWeather(weather) {
     let html = `
-        <h2>${weather.location.name}</h2>
+        <div>
+            <h2>${weather.location.name}</h2>
+                <button class="js-save-city save-city" type="button">Mentés</button>        
+        </div>
         <div>
             <h1>${weather.current.temp_c}°C</h1>
             <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
@@ -75,3 +93,5 @@ function formSubmitted(event) {
 $form.addEventListener("submit", formSubmitted);
 
 
+// saveButton.addEventListener("click", saveCity);
+$saveButton.addEventListener("click", saveCity);
