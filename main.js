@@ -28,18 +28,33 @@ function makeSavedCityButtons(savedCities) {
     let html = '';
     if (savedCities.length > 0) {
         for (let city of savedCities) {
-            html += `<button class="js-saved-city-button saved-city-button btn btn-primary">${city}</button>`
+            html += `<button class="js-saved-city-button saved-city-button btn btn-primary">${city}</button>`;
         }
     }
     return html;
 }
+
+function renderDecideOverwrite() {
+    let html = `
+    <div class="js-decide-overwrite decide-overwrite">
+        Már elmentettél három várost. Felülírod az elsőt?
+        <button class="js-yes-button btn btn-primary">Igen</button><button class="js-no-button btn btn-primary">Nem</button>    
+    </div>
+    `;
+    return html;
+} // TODO addEventlistener a gomboknak
 
 function saveCity(event) {
     // Ellenőrizd, hogy van-e érvényes időjárásadat az oldalon
     const weatherElement = document.querySelector('.weather-div');
     if (weatherElement) {
         const cityName = $locationName.innerText;
-        if (!savedCities.includes(cityName) && savedCities.length < 3) { savedCities.push(cityName) };
+        if (!savedCities.includes(cityName) && savedCities.length < 3) {
+            savedCities.push(cityName)
+        }
+        else if (!savedCities.includes(cityName) && savedCities.length === 3) {
+            $errorSection.innerHTML = renderDecideOverwrite();
+        }
     }
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
 }
@@ -95,7 +110,7 @@ function formSubmitted(event) {
         $errorSection.innerHTML = '';
         fetchCity(city)
     } else {
-        $errorSection.innerHTML = 'Sikertelen keresés!'
+        $errorSection.innerHTML = 'Sikertelen keresés!';
     }
 }
 
