@@ -28,7 +28,7 @@ function makeSavedCityButtons(savedCities) {
     let html = '';
     if (savedCities.length > 0) {
         for (let city of savedCities) {
-            html += `<button class="btn btn-primary">${city}</button>`
+            html += `<button class="js-saved-city-button saved-city-button btn btn-primary">${city}</button>`
         }
     }
     return html;
@@ -41,7 +41,6 @@ function saveCity(event) {
         const cityName = $locationName.innerText;
         if (!savedCities.includes(cityName) && savedCities.length < 3) { savedCities.push(cityName) };
     }
-    console.log('Mentett városok:', savedCities);
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
 }
 
@@ -100,8 +99,12 @@ function formSubmitted(event) {
     }
 }
 
+function loadCity(event) {
+    if (event.target.classList.contains('saved-city-button')) {
+        fetchCity(event.target.innerText);
+    }
+}
+
 $form.addEventListener("submit", formSubmitted);
-
-
-// saveButton.addEventListener("click", saveCity);
 $saveButton.addEventListener("click", saveCity);
+$savedCitiesContainer.addEventListener("click", loadCity);

@@ -46,3 +46,16 @@ p,
 a {
   font-size: 2rem;
 }
+
+.btn-primary {
+  background-color: var(--main-green);
+  color: var(--main-white);
+  border-color: var(--main-green);
+}
+
+.btn-primary:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  outline: 2px solid var(--main-green);
+  border-color: var(--main-green);
+}
