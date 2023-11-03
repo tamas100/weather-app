@@ -3,7 +3,6 @@ const $form = document.querySelector(".js-city-form");
 const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
-// const saveButton = document.querySelector(".js-save-city");
 const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
 const $savedCitiesContainer = document.querySelector(".js-saved-cities");
@@ -38,11 +37,12 @@ function renderDecideOverwrite() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
         Már elmentettél három várost. Felülírod az elsőt?
-        <button class="js-yes-button btn btn-primary">Igen</button><button class="js-no-button btn btn-primary">Nem</button>    
+        <button class="js-yes-button btn btn-primary">Igen</button>
+        <button class="js-no-button btn btn-primary">Nem</button>    
     </div>
     `;
     return html;
-} // TODO addEventlistener a gomboknak
+}
 
 function saveCity(event) {
     // Ellenőrizd, hogy van-e érvényes időjárásadat az oldalon
@@ -79,7 +79,7 @@ function renderResponse(weather) {
     // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
     if (!weather.error) {
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
-        $locationName.innerHTML = weather.location.name;
+        $locationName.innerText = weather.location.name;
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!</p>`;
     }
@@ -120,6 +120,22 @@ function loadCity(event) {
     }
 }
 
+function overwriteFirstSavedCity() {
+    savedCities.shift();
+    savedCities.push($locationName.innerHTML);
+    $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
+    $errorSection.innerHTML = '';
+}
+
+function handleYesOrNo(event) {
+    if (event.target.classList.contains('js-no-button')) {
+        $errorSection.innerHTML = '';
+    } else if (event.target.classList.contains('js-yes-button')) {
+        overwriteFirstSavedCity();
+    }
+}
+
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
+$errorSection.addEventListener("click", handleYesOrNo);
