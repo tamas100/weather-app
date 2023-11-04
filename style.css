@@ -19,7 +19,7 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
-  border: 1px solid red;
+  border: 1px solid green;
 }
 
 /* html, */
@@ -58,4 +58,14 @@ a {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   outline: 2px solid var(--main-green);
   border-color: var(--main-green);
+}
+
+.warning,
+.warning * {
+  border: 1px solid yellow;
+}
+
+.error,
+.error * {
+  border: 1px solid red;
 }

@@ -7,7 +7,7 @@ const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
 const $savedCitiesContainer = document.querySelector(".js-saved-cities");
 const $locationName = document.querySelector(".js-location-name");
-const $SaveButtonContainer = document.querySelector(".js-save-button-div");
+const $warningSection = document.querySelector(".js-warning")
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -36,7 +36,7 @@ function makeSavedCityButtons(savedCities) {
 
 function renderDecideOverwrite() {
     let html = `
-    <div class="js-decide-overwrite decide-overwrite">
+    <div class="js-city-already-saved city-already-saved">
         <p>Már elmentettél három várost, klikkelj arra, amelyiket felül szeretnéd írni az újjal!</p>          
     </div>
     `;
@@ -61,9 +61,9 @@ function saveCity(event) {
             savedCities.push(cityName);
         }
         else if (!savedCities.includes(cityName) && savedCities.length === 3) {
-            $errorSection.innerHTML = renderDecideOverwrite();
+            $warningSection.innerHTML = renderDecideOverwrite();
         } else {
-            $errorSection.innerHTML = renderCityAlreadySaved();
+            $warningSection.innerHTML = renderCityAlreadySaved();
         }
     }
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
@@ -117,7 +117,7 @@ function formSubmitted(event) {
     // Validáció
     if (city.length > 0) {
         // Ennek a tartalmát minden kereséskor törölni kell!
-        clearErrorSection()
+        $errorSection.innerHTML = '';
         fetchCity(city)
     } else {
         $errorSection.innerHTML = 'Sikertelen keresés!';
@@ -125,25 +125,24 @@ function formSubmitted(event) {
 }
 
 function loadCity(event) {
-    if (document.querySelector(".js-decide-overwrite") !== null) {
-        overwriteSavedCity(event)
-    }
-    else if (event.target.classList.contains('saved-city-button')) {
+    if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
         fetchCity(event.target.innerText);
+    } else {
+        overwriteSavedCity(event);
     }
 }
 
 function overwriteSavedCity(event) {
     savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
-    clearErrorSection()
+    clearWarningSection()
 }
 
-function clearErrorSection() {
-    $errorSection.innerHTML = '';
+function clearWarningSection() {
+    $warningSection.innerHTML = '';
 }
 
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
-$errorSection.addEventListener("click", clearErrorSection);
+$warningSection.addEventListener("click", clearWarningSection);
