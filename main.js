@@ -37,7 +37,16 @@ function makeSavedCityButtons(savedCities) {
 function renderDecideOverwrite() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
-        Már elmentettél három várost, klikkelj arra, amelyiket felül szeretnéd írni az újjal!          
+        <p>Már elmentettél három várost, klikkelj arra, amelyiket felül szeretnéd írni az újjal!</p>          
+    </div>
+    `;
+    return html;
+}
+
+function renderCityAlreadySaved() {
+    let html = `
+    <div class="js-decide-overwrite decide-overwrite">
+        <p>Ezt a várost már elmentetted!</p>          
     </div>
     `;
     return html;
@@ -53,6 +62,8 @@ function saveCity(event) {
         }
         else if (!savedCities.includes(cityName) && savedCities.length === 3) {
             $errorSection.innerHTML = renderDecideOverwrite();
+        } else {
+            $errorSection.innerHTML = renderCityAlreadySaved();
         }
     }
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
