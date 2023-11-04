@@ -7,6 +7,7 @@ const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
 const $savedCitiesContainer = document.querySelector(".js-saved-cities");
 const $locationName = document.querySelector(".js-location-name");
+const $SaveButtonContainer = document.querySelector(".js-save-button-div");
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -36,9 +37,7 @@ function makeSavedCityButtons(savedCities) {
 function renderDecideOverwrite() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
-        Már elmentettél három várost. Felülírod az elsőt?
-        <button class="js-yes-button btn btn-primary">Igen</button>
-        <button class="js-no-button btn btn-primary">Nem</button>    
+        Már elmentettél három várost, klikkelj arra, amelyiket felül szeretnéd írni az újjal!          
     </div>
     `;
     return html;
@@ -50,7 +49,7 @@ function saveCity(event) {
     if (weatherElement) {
         const cityName = $locationName.innerText;
         if (!savedCities.includes(cityName) && savedCities.length < 3) {
-            savedCities.push(cityName)
+            savedCities.push(cityName);
         }
         else if (!savedCities.includes(cityName) && savedCities.length === 3) {
             $errorSection.innerHTML = renderDecideOverwrite();
@@ -115,27 +114,20 @@ function formSubmitted(event) {
 }
 
 function loadCity(event) {
-    if (event.target.classList.contains('saved-city-button')) {
+    if (document.querySelector(".js-decide-overwrite") !== null) {
+        overwriteSavedCity(event)
+    }
+    else if (event.target.classList.contains('saved-city-button')) {
         fetchCity(event.target.innerText);
     }
 }
 
-function overwriteFirstSavedCity() {
-    savedCities.shift();
-    savedCities.push($locationName.innerHTML);
+function overwriteSavedCity(event) {
+    savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
     $errorSection.innerHTML = '';
-}
-
-function handleYesOrNo(event) {
-    if (event.target.classList.contains('js-no-button')) {
-        $errorSection.innerHTML = '';
-    } else if (event.target.classList.contains('js-yes-button')) {
-        overwriteFirstSavedCity();
-    }
 }
 
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
-$errorSection.addEventListener("click", handleYesOrNo);
