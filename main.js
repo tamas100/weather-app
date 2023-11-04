@@ -46,7 +46,7 @@ function renderDecideOverwrite() {
 function renderCityAlreadySaved() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
-        <p>Ezt a várost már elmentetted!</p>          
+        <p>Ezt a várost már elmentetted! <span>X</span></p>         
     </div>
     `;
     return html;
@@ -117,7 +117,7 @@ function formSubmitted(event) {
     // Validáció
     if (city.length > 0) {
         // Ennek a tartalmát minden kereséskor törölni kell!
-        $errorSection.innerHTML = '';
+        clearErrorSection()
         fetchCity(city)
     } else {
         $errorSection.innerHTML = 'Sikertelen keresés!';
@@ -136,9 +136,14 @@ function loadCity(event) {
 function overwriteSavedCity(event) {
     savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
+    clearErrorSection()
+}
+
+function clearErrorSection() {
     $errorSection.innerHTML = '';
 }
 
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
+$errorSection.addEventListener("click", clearErrorSection);
