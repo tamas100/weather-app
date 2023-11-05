@@ -5,7 +5,7 @@ const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
-const $savedCitiesContainer = document.querySelector(".js-saved-cities");
+const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning")
 
@@ -46,8 +46,7 @@ function renderDecideOverwrite() {
 function renderCityAlreadySaved() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
-        <p>Ezt a várost már elmentetted!</p>
-        <i id="button-icon" class="bi bi-x"></i>         
+        <p>Ezt a várost már elmentetted!<i id="button-icon" class="bi bi-x"></i></p>                 
     </div>
     `;
     return html;
@@ -92,7 +91,7 @@ function renderResponse(weather) {
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
         $locationName.innerText = weather.location.name;
     } else {
-        $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!</p><i id="button-icon" class="bi bi-x"></i>`;
+        $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
 }
@@ -121,7 +120,7 @@ function formSubmitted(event) {
         clearErrorSection();
         fetchCity(city)
     } else {
-        $errorSection.innerHTML = `<p>Sikertelen keresés!</p><i id="button-icon" class="bi bi-x"></i>`;
+        $errorSection.innerHTML = `<p>Sikertelen keresés!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
 }
 

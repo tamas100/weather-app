@@ -19,7 +19,7 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 
 body {
@@ -48,9 +48,28 @@ a {
   font-size: 2rem;
 }
 
-.section-search,
-.city-weather {
-  margin: 0 1.5rem 4rem;
+.btn {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  padding: 0.5rem 1.6rem;
+  margin: 0.4rem;
+  font-weight: bold;
+  border-style: solid;
+  text-align: center;
+  transition: transform 100ms;
+}
+
+.btn-primary {
+  background-color: var(--main-grey);
+  color: var(--main-white);
+  border-color: var(--main-grey);
+}
+
+.btn-primary:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  outline: 2px solid var(--main-grey);
+  border-color: var(--main-grey);
 }
 
 .section-search {
@@ -59,6 +78,7 @@ a {
 
 .city-form,
 .weather-div,
+.saved-cities,
 footer {
   background-color: var(--main-yellow);
   max-width: 80rem;
@@ -67,6 +87,12 @@ footer {
   border: 10px solid var(--main-blue);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.section-search,
+.city-weather,
+.saved-cities {
+  margin-bottom: 4rem;
 }
 
 .city-label {
@@ -93,29 +119,47 @@ footer {
   outline: 0.4rem solid var(--light-grey-2);
 }
 
-.btn {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  /* text-transform: uppercase; */
-  padding: 0.5rem 1.6rem;
-  margin: 0.4rem;
+.location-name {
+  margin-top: 1.6rem;
+}
+
+.saved-cities {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.saved-cities-div {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.error,
+.warning {
+  margin: 0 auto 4rem;
+  max-width: 80rem;
+  background-color: var(--main-yellow);
+  color: var(--main-red);
+  font-weight: 700;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.error p,
+.warning p {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.6rem;
+  border: 10px solid var(--main-blue);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   font-weight: bold;
-  border-style: solid;
-  text-align: center;
-  transition: transform 100ms;
-}
-
-.btn-primary {
-  background-color: var(--main-grey);
-  color: var(--main-white);
-  border-color: var(--main-grey);
-}
-
-.btn-primary:hover {
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  outline: 2px solid var(--main-grey);
-  border-color: var(--main-grey);
+  gap: 1rem;
 }
 
 .bi-github {
@@ -123,21 +167,6 @@ footer {
   padding: 0.2rem 0.4rem;
 }
 
-.warning,
-.warning * {
-  border: 1px solid yellow;
-}
-
-.error,
-.error * {
-  border: 1px solid red;
-}
-
-footer {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-  display: flex;
-  align-items: center;
-  text-align: start;
-  gap: 1rem;
+.bi-x {
+  font-size: 2rem;
 }

@@ -32,7 +32,6 @@
           <button class="js-submit submit btn btn-primary" type="submit">
             Keresés
           </button>
-          <!-- <p>A keresett várost (max. hármat) el is mentheted!</p> -->
           <h2 class="js-location-name location-name"></h2>
           <button
             class="js-save-city-b save-city-b btn btn-primary"
@@ -42,13 +41,16 @@
           </button>
         </form>
       </section>
-      <div class="js-saved-cities saved-cities"></div>
+      <section class="js-saved-cities saved-cities">
+        <p>Elmentett városok:</p>
+        <div class="js-saved-cities-div saved-cities-div"></div>
+      </section>
       <section class="js-error error"></section>
       <section class="js-warning warning"></section>
       <section class="js-city-weather city-weather"></section>
     </main>
     <footer>
-      <p>2023 Kis Tamás</p>
+      <p>2023 &copy; Kis Tamás</p>
       <a href="https://github.com/tamas100/weather-app" target="_blank"
         ><i class="bi bi-github btn-primary"></i
       ></a>
