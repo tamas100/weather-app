@@ -46,7 +46,8 @@ function renderDecideOverwrite() {
 function renderCityAlreadySaved() {
     let html = `
     <div class="js-decide-overwrite decide-overwrite">
-        <p>Ezt a várost már elmentetted! <span>X</span></p>         
+        <p>Ezt a várost már elmentetted!</p>
+        <i id="button-icon" class="bi bi-x"></i>         
     </div>
     `;
     return html;
@@ -76,10 +77,10 @@ function renderWeather(weather) {
             <h1>${weather.current.temp_c}°C</h1>
             <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
         </div>
-        <p>${weather.forecast.forecastday[0].day.mintemp_c}°C - ${weather.forecast.forecastday[0].day.maxtemp_c}°C</p>
         <p>${weather.current.condition.text}</p>
         <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
         <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>
+        <p>min-max: ${weather.forecast.forecastday[0].day.mintemp_c}°C - ${weather.forecast.forecastday[0].day.maxtemp_c}°C</p>
     `;
     return html;
 }
@@ -91,7 +92,7 @@ function renderResponse(weather) {
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
         $locationName.innerText = weather.location.name;
     } else {
-        $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!</p>`;
+        $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!</p><i id="button-icon" class="bi bi-x"></i>`;
     }
     $container.innerHTML = html;
 }
@@ -117,10 +118,10 @@ function formSubmitted(event) {
     // Validáció
     if (city.length > 0) {
         // Ennek a tartalmát minden kereséskor törölni kell!
-        $errorSection.innerHTML = '';
+        clearErrorSection();
         fetchCity(city)
     } else {
-        $errorSection.innerHTML = 'Sikertelen keresés!';
+        $errorSection.innerHTML = `<p>Sikertelen keresés!</p><i id="button-icon" class="bi bi-x"></i>`;
     }
 }
 
@@ -142,7 +143,12 @@ function clearWarningSection() {
     $warningSection.innerHTML = '';
 }
 
+function clearErrorSection() {
+    $errorSection.innerHTML = '';
+}
+
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
 $warningSection.addEventListener("click", clearWarningSection);
+$errorSection.addEventListener("click", clearErrorSection);
