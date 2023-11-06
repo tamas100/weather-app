@@ -7,7 +7,8 @@ const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = [];
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const $locationName = document.querySelector(".js-location-name");
-const $warningSection = document.querySelector(".js-warning")
+const $warningSection = document.querySelector(".js-warning");
+const $forecastTodayContainer = document.querySelector(".js-today-div")
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -78,22 +79,32 @@ function renderWeather(weather) {
         </div>
         <p>${weather.current.condition.text}</p>
         <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
-        <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>
-        <p>min-max: ${weather.forecast.forecastday[0].day.mintemp_c}°C - ${weather.forecast.forecastday[0].day.maxtemp_c}°C</p>
+        <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>        
+    `;
+    return html;
+}
+
+function renderForecastToday(weather) {
+    let html = `
+        <h3 class="max-temp">${weather.forecast.forecastday[0].day.maxtemp_c}°C</h3>
+        <h3 class="min-temp">${weather.forecast.forecastday[0].day.mintemp_c}°C</h3>
     `;
     return html;
 }
 
 function renderResponse(weather) {
     let html = ``;
+    let forecastToday = ``;
     // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
     if (!weather.error) {
-        html += `<div class="weather-div">${renderWeather(weather)}</div>`;
         $locationName.innerText = weather.location.name;
+        html += `<div class="weather-div">${renderWeather(weather)}</div>`;
+        forecastToday += `${renderForecastToday(weather)}`;
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
+    $forecastTodayContainer.innerHTML += forecastToday;
 }
 
 function getApiUrl(city) {

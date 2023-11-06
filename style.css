@@ -29,8 +29,6 @@ body {
 
 h1 {
   display: inline-block;
-  /* margin-top: 2rem; */
-  /* padding: 1.6rem; */
   font-size: 5.6rem;
   text-align: center;
 }
@@ -72,14 +70,11 @@ a {
   border-color: var(--main-grey);
 }
 
-.section-search {
-  margin-top: 2rem;
-}
-
 .city-form,
 .weather-div,
 .saved-cities,
-footer {
+footer,
+.forecast-section {
   background-color: var(--main-yellow);
   max-width: 80rem;
   margin: 0 auto;
@@ -91,8 +86,9 @@ footer {
 
 .section-search,
 .city-weather,
-.saved-cities {
-  margin-bottom: 4rem;
+.saved-cities,
+.forecast-section {
+  margin-bottom: 2rem;
 }
 
 .city-label {
@@ -137,7 +133,7 @@ footer {
 
 .error,
 .warning {
-  margin: 0 auto 4rem;
+  margin: 0 auto 2rem;
   max-width: 80rem;
   background-color: var(--main-yellow);
   color: var(--main-red);
@@ -152,6 +148,14 @@ footer {
   justify-content: space-between;
   padding: 1.6rem;
   border: 10px solid var(--main-blue);
+}
+
+.max-temp {
+  color: var(--main-red);
+}
+
+.min-temp {
+  color: var(--main-blue);
 }
 
 footer {
