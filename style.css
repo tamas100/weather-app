@@ -133,7 +133,7 @@ footer,
 
 .error,
 .warning {
-  margin: 0 auto 2rem;
+  margin: 0 auto 0rem;
   max-width: 80rem;
   background-color: var(--main-yellow);
   color: var(--main-red);
@@ -173,4 +173,14 @@ footer {
 
 .bi-x {
   font-size: 2rem;
+}
+
+.bi-sunrise,
+.bi-sunset {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.invisible {
+  display: none;
 }

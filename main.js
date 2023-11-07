@@ -9,6 +9,9 @@ const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
 const $forecastTodayContainer = document.querySelector(".js-today-div")
+const $forecastTomorrowContainer = document.querySelector(".js-tomorrow-div")
+const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after-tomorrow-div")
+const $threedaysForecastButton = document.querySelector(".js-three-days-forecast-button");
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
@@ -84,28 +87,55 @@ function renderWeather(weather) {
     return html;
 }
 
+function renderPlusTwoDaysForecast() {
+    console.log("click");
+}
+
+function renderForecastDayAfterTomorrow(weather) {
+    let html = `
+        <p>Ma</p>
+        <h3 class="max-temp">${weather.forecast.forecastday[2].day.maxtemp_c}°C</h3>
+        <h3 class="min-temp">${weather.forecast.forecastday[2].day.mintemp_c}°C</h3>
+        <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[2].astro.sunrise}</p>
+        <p><i class="bi bi-sunset"></i> ${weather.forecast.forecastday[2].astro.sunset}</p>
+    `;
+    return html;
+}
+function renderForecastTomorrow(weather) {
+    let html = `
+        <p>Ma</p>
+        <h3 class="max-temp">${weather.forecast.forecastday[1].day.maxtemp_c}°C</h3>
+        <h3 class="min-temp">${weather.forecast.forecastday[1].day.mintemp_c}°C</h3>
+        <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[1].astro.sunrise}</p>
+        <p><i class="bi bi-sunset"></i> ${weather.forecast.forecastday[1].astro.sunset}</p>
+    `;
+    return html;
+}
+
 function renderForecastToday(weather) {
     let html = `
         <p>Ma</p>
         <h3 class="max-temp">${weather.forecast.forecastday[0].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[0].day.mintemp_c}°C</h3>
+        <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[0].astro.sunrise}</p>
+        <p><i class="bi bi-sunset"></i> ${weather.forecast.forecastday[0].astro.sunset}</p>
     `;
     return html;
 }
 
 function renderResponse(weather) {
     let html = ``;
-    let forecastToday = ``;
     // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
     if (!weather.error) {
         $locationName.innerText = weather.location.name;
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
-        forecastToday += `${renderForecastToday(weather)}`;
+        $forecastTodayContainer.innerHTML += `${renderForecastToday(weather)}`;
+        $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
+        $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
-    $forecastTodayContainer.innerHTML = forecastToday;
 }
 
 function getApiUrl(city) {
@@ -164,3 +194,4 @@ $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
 $warningSection.addEventListener("click", clearWarningSection);
 $errorSection.addEventListener("click", clearErrorSection);
+$threedaysForecastButton.addEventListener("click", renderPlusTwoDaysForecast);
