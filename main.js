@@ -88,12 +88,12 @@ function renderWeather(weather) {
 }
 
 function renderPlusTwoDaysForecast() {
-    console.log("click");
+    console.log("click");   // TODO 
 }
 
 function renderForecastDayAfterTomorrow(weather) {
     let html = `
-        <p>Ma</p>
+        <p>Holnapután</p>
         <h3 class="max-temp">${weather.forecast.forecastday[2].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[2].day.mintemp_c}°C</h3>
         <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[2].astro.sunrise}</p>
@@ -103,7 +103,7 @@ function renderForecastDayAfterTomorrow(weather) {
 }
 function renderForecastTomorrow(weather) {
     let html = `
-        <p>Ma</p>
+        <p>Holnap</p>
         <h3 class="max-temp">${weather.forecast.forecastday[1].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[1].day.mintemp_c}°C</h3>
         <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[1].astro.sunrise}</p>
@@ -129,7 +129,7 @@ function renderResponse(weather) {
     if (!weather.error) {
         $locationName.innerText = weather.location.name;
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
-        $forecastTodayContainer.innerHTML += `${renderForecastToday(weather)}`;
+        $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
     } else {
