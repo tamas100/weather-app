@@ -84,11 +84,19 @@ function renderWeather(weather) {
         <p>${weather.current.condition.text}</p>
         <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
         <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>        
+        <p>Csapadék: ${weather.current.precip_mm}mm</p>
+        <div class="js-weather-details-div invisible">
+            <p>Széllökés: ${weather.current.gust_kph}km/h</p>        
+            <p>Légnyomás: ${weather.current.pressure_mb}hPa</p>        
+            <p>Páratartalom: ${weather.current.humidity}%</p>        
+            <p>Látótávolság: ${weather.current.vis_km}km</p>  
+        </div>
+        <button class="js-weather-details-button btn btn-primary">Részletes időjárás</button>      
     `;
     return html;
 }
 
-function changeButtonName() {
+function changeForecastButtonName() {
     if ($forecastContainer.classList.contains("space-around")) {
         $threedaysForecastButton.innerText = '1 napos előrejelzés';
     } else {
@@ -100,7 +108,7 @@ function renderPlusTwoDaysForecast() {
     $forecastTomorrowContainer.classList.toggle("invisible");
     $forecastDayAfterTomorrowContainer.classList.toggle("invisible");
     $forecastContainer.classList.toggle("space-around");
-    changeButtonName();
+    changeForecastButtonName();
 }
 
 function renderForecastDayAfterTomorrow(weather) {
@@ -201,9 +209,25 @@ function clearErrorSection() {
     $errorSection.innerHTML = '';
 }
 
+function changeDetailsButtonName() {
+    if (document.querySelector(".js-weather-details-div").classList.contains("invisible")) {
+        document.querySelector(".js-weather-details-button").innerText = 'Részletes időjárás';
+    } else {
+        document.querySelector(".js-weather-details-button").innerText = 'Kevesebb részlet';
+    }
+}
+
+function renderWeatherDetails(event) {
+    if (event.target.classList.contains("js-weather-details-button")) {
+        document.querySelector(".js-weather-details-div").classList.toggle("invisible");
+        changeDetailsButtonName();
+    }
+}
+
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
 $warningSection.addEventListener("click", clearWarningSection);
 $errorSection.addEventListener("click", clearErrorSection);
 $threedaysForecastButton.addEventListener("click", renderPlusTwoDaysForecast);
+$container.addEventListener("click", renderWeatherDetails);
