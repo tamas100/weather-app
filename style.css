@@ -184,3 +184,20 @@ footer {
 .invisible {
   display: none;
 }
+
+.space-around {
+  justify-content: space-around;
+}
+
+.forecast-div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.forecast-div div {
+  margin: 1.6rem;
+}
+
+.forecast-div div :first-child {
+  font-weight: 700;
+}

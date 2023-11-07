@@ -8,9 +8,10 @@ const savedCities = [];
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
-const $forecastTodayContainer = document.querySelector(".js-today-div")
-const $forecastTomorrowContainer = document.querySelector(".js-tomorrow-div")
-const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after-tomorrow-div")
+const $forecastContainer = document.querySelector(".js-forecast-div");
+const $forecastTodayContainer = document.querySelector(".js-today-div");
+const $forecastTomorrowContainer = document.querySelector(".js-tomorrow-div");
+const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after-tomorrow-div");
 const $threedaysForecastButton = document.querySelector(".js-three-days-forecast-button");
 
 function getLocation(location) {
@@ -87,8 +88,19 @@ function renderWeather(weather) {
     return html;
 }
 
+function changeButtonName() {
+    if ($forecastContainer.classList.contains("space-around")) {
+        $threedaysForecastButton.innerText = '1 napos előrejelzés';
+    } else {
+        $threedaysForecastButton.innerText = '3 napos előrejelzés';
+    }
+}
+
 function renderPlusTwoDaysForecast() {
-    console.log("click");   // TODO 
+    $forecastTomorrowContainer.classList.toggle("invisible");
+    $forecastDayAfterTomorrowContainer.classList.toggle("invisible");
+    $forecastContainer.classList.toggle("space-around");
+    changeButtonName();
 }
 
 function renderForecastDayAfterTomorrow(weather) {
