@@ -133,7 +133,7 @@ footer,
 
 .error,
 .warning {
-  margin: 0 auto 0rem;
+  margin: 0 auto 2rem;
   max-width: 80rem;
   background-color: var(--main-yellow);
   color: var(--main-red);

@@ -15,7 +15,7 @@ const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after
 const $threedaysForecastButton = document.querySelector(".js-three-days-forecast-button");
 
 function getLocation(location) {
-    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5`;
+    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
 }
 
 function fetchPosition(position) {
@@ -145,13 +145,13 @@ function renderResponse(weather) {
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
     } else {
-        $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
+        $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
 }
 
 function getApiUrl(city) {
-    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5`;
+    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
 }
 
 function fetchCity(city) {
