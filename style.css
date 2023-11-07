@@ -72,7 +72,7 @@ a {
 
 .city-form,
 .weather-div,
-.saved-cities,
+.section-result,
 footer,
 .forecast-section {
   background-color: var(--main-yellow);
@@ -86,7 +86,6 @@ footer,
 
 .section-search,
 .city-weather,
-.saved-cities,
 .forecast-section {
   margin-bottom: 2rem;
 }
@@ -115,14 +114,16 @@ footer,
   outline: 0.4rem solid var(--light-grey-2);
 }
 
-.location-name {
-  margin-top: 1.6rem;
+.section-result {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.6rem;
 }
 
 .saved-cities {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0rem;
 }
 
 .saved-cities-div {
@@ -185,9 +186,9 @@ footer {
   display: none;
 }
 
-.space-around {
+/* .space-around {
   justify-content: space-around;
-}
+} */
 
 .forecast-div {
   display: flex;
