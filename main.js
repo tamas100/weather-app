@@ -86,6 +86,7 @@ function renderWeather(weather) {
 
 function renderForecastToday(weather) {
     let html = `
+        <p>Ma</p>
         <h3 class="max-temp">${weather.forecast.forecastday[0].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[0].day.mintemp_c}°C</h3>
     `;
@@ -104,7 +105,7 @@ function renderResponse(weather) {
         $errorSection.innerHTML = `<p>Sajnálom, nem találok ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
-    $forecastTodayContainer.innerHTML += forecastToday;
+    $forecastTodayContainer.innerHTML = forecastToday;
 }
 
 function getApiUrl(city) {
@@ -115,6 +116,7 @@ function fetchCity(city) {
     fetch(getApiUrl(city))
         .then(response => response.json())
         .then(renderResponse);
+    clearErrorSection()
 }
 
 function formSubmitted(event) {
