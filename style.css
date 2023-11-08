@@ -74,7 +74,8 @@ a {
 .weather-div,
 .section-result,
 footer,
-.forecast-section {
+.forecast-section,
+.hourly-forecast-section {
   background-color: var(--main-yellow);
   max-width: 80rem;
   margin: 0 auto;
@@ -86,7 +87,8 @@ footer,
 
 .section-search,
 .city-weather,
-.forecast-section {
+.forecast-section,
+.hourly-forecast-section {
   margin-bottom: 2rem;
 }
 
@@ -114,16 +116,25 @@ footer,
   outline: 0.4rem solid var(--light-grey-2);
 }
 
-.section-result {
+/* Majd jó lesz a desktop nézethez */
+/* .section-result {
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 1.6rem;
-}
+} */
 
 .saved-cities {
   display: flex;
   flex-direction: column;
   gap: 0rem;
+}
+
+.saved-cities p,
+.time-p,
+.next-hours-p {
+  font-weight: 700;
+  margin-top: 1.6rem;
 }
 
 .saved-cities-div {
@@ -158,6 +169,15 @@ footer,
 .min-temp {
   color: var(--main-blue);
 }
+
+.hourly-forecast-heading {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* .twenty-four-hours-forecast-button {
+  margin-top: 1.6rem;
+} */
 
 footer {
   display: flex;

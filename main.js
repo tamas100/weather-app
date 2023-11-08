@@ -13,6 +13,10 @@ const $forecastTodayContainer = document.querySelector(".js-today-div");
 const $forecastTomorrowContainer = document.querySelector(".js-tomorrow-div");
 const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after-tomorrow-div");
 const $threedaysForecastButton = document.querySelector(".js-three-days-forecast-button");
+const $firstThreeHoursForecastContainer = document.querySelector(".js-first-three-hours-div");
+const $restHoursForecastContainer = document.querySelector(".js-rest-hours-div");
+const $twentyFourHoursForecastButtons = document.querySelectorAll(".js-twenty-four-hours-forecast-button");
+const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
@@ -40,7 +44,8 @@ function makeSavedCityButtons(savedCities) {
 }
 
 function renderDecideOverwrite() {
-    let html = `
+    let html =
+        `
     <div class="js-city-already-saved city-already-saved">
         <p>Már elmentettél három várost, klikkelj arra, amelyiket felül szeretnéd írni az újjal!</p>          
     </div>
@@ -49,7 +54,8 @@ function renderDecideOverwrite() {
 }
 
 function renderCityAlreadySaved() {
-    let html = `
+    let html =
+        `
     <div class="js-decide-overwrite decide-overwrite">
         <p>Ezt a várost már elmentetted!<i id="button-icon" class="bi bi-x"></i></p>                 
     </div>
@@ -76,7 +82,8 @@ function saveCity(event) {
 
 
 function renderWeather(weather) {
-    let html = `        
+    let html =
+        `        
         <div>
             <h1>${weather.current.temp_c}°C</h1>
             <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
@@ -112,7 +119,8 @@ function renderPlusTwoDaysForecast() {
 }
 
 function renderForecastDayAfterTomorrow(weather) {
-    let html = `
+    let html =
+        `
         <p>Holnapután</p>
         <div>
             <img src="https:${weather.forecast.forecastday[2].day.condition.icon}" alt="${weather.forecast.forecastday[2].day.condition.text}"/>
@@ -126,7 +134,8 @@ function renderForecastDayAfterTomorrow(weather) {
     return html;
 }
 function renderForecastTomorrow(weather) {
-    let html = `
+    let html =
+        `
         <p>Holnap</p>
         <div>
             <img src="https:${weather.forecast.forecastday[1].day.condition.icon}" alt="${weather.forecast.forecastday[1].day.condition.text}"/>
@@ -141,7 +150,8 @@ function renderForecastTomorrow(weather) {
 }
 
 function renderForecastToday(weather) {
-    let html = `
+    let html =
+        `
         <p>Ma</p>
         <div>
             <img src="https:${weather.forecast.forecastday[0].day.condition.icon}" alt="${weather.forecast.forecastday[0].day.condition.text}"/>
@@ -155,6 +165,57 @@ function renderForecastToday(weather) {
     return html;
 }
 
+function getCurrentHour(weather) {
+    return parseInt(weather.location.localtime.slice(11, 13));
+}
+
+function createHourlyForecastHtml(weather, day, hour) {
+    let hourlyData = weather.forecast.forecastday[day].hour[hour];
+    let html = `
+        <section class="js-section-one-hour-forecast section-one-hour-forecast">
+            <p class="time-p">${hourlyData.time.slice(11)}</p>   
+            <div>
+                <h2>${hourlyData.temp_c}°C</h2>
+                <img src="https:${hourlyData.condition.icon}" alt="${hourlyData.condition.text}"/>
+            </div>
+            <p>${hourlyData.condition.text}</p>
+            <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
+            <p>Szélsebesség: ${hourlyData.wind_kph}km/h</p>        
+            <p>Csapadék: ${hourlyData.precip_mm}mm</p>
+            <div>
+                <p>Széllökés: ${hourlyData.gust_kph}km/h</p>        
+                <p>Légnyomás: ${hourlyData.pressure_mb}hPa</p>        
+                <p>Páratartalom: ${hourlyData.humidity}%</p>        
+                <p>Látótávolság: ${hourlyData.vis_km}km</p>  
+            </div>
+        </section>
+    `;
+    return html;
+}
+
+function renderfirstThreeHoursForecast(weather) {
+    let html = '';
+    const currentHour = getCurrentHour(weather);
+    for (let i = currentHour + 1; i < currentHour + 4; i++) {
+        html += createHourlyForecastHtml(weather, 0, i);
+    }
+    return html;
+}
+
+function renderRestHoursForecast(weather) {
+    let html = '';
+    const currentHour = getCurrentHour(weather);
+
+    for (let i = currentHour + 4; i < 24; i++) {
+        html += createHourlyForecastHtml(weather, 0, i);
+    }
+    for (let i = 0; i < 24 - currentHour - 1; i++) {
+        html += createHourlyForecastHtml(weather, 1, i);
+    }
+
+    return html;
+}
+
 function renderResponse(weather) {
     let html = ``;
     // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
@@ -164,6 +225,8 @@ function renderResponse(weather) {
         $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
+        $firstThreeHoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
+        $restHoursForecastContainer.innerHTML = renderRestHoursForecast(weather)
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
@@ -236,6 +299,28 @@ function renderWeatherDetails(event) {
     }
 }
 
+function changeTwentyFourHoursForecastButtonName() {
+    if ($restHoursForecastContainer.classList.contains("invisible")) {
+        [...$twentyFourHoursForecastButtons].forEach(button => button.innerText = '24 órás előrejelzés');
+    } else {
+        [...$twentyFourHoursForecastButtons].forEach(button => button.innerText = '3 órás előrejelzés');
+    }
+}
+
+function changeNextHoursParagraphInnerText() {
+    if ($restHoursForecastContainer.classList.contains("invisible")) {
+        $nextHoursParagraph.innerText = 'Következő 3 óra';
+    } else {
+        $nextHoursParagraph.innerText = 'Következő 24 óra';
+    }
+}
+
+function showRestHoursForecast() {
+    $restHoursForecastContainer.classList.toggle("invisible");
+    changeTwentyFourHoursForecastButtonName();
+    changeNextHoursParagraphInnerText();
+}
+
 $form.addEventListener("submit", formSubmitted);
 $saveButton.addEventListener("click", saveCity);
 $savedCitiesContainer.addEventListener("click", loadCity);
@@ -243,3 +328,4 @@ $warningSection.addEventListener("click", clearWarningSection);
 $errorSection.addEventListener("click", clearErrorSection);
 $threedaysForecastButton.addEventListener("click", renderPlusTwoDaysForecast);
 $container.addEventListener("click", renderWeatherDetails);
+[...$twentyFourHoursForecastButtons].forEach(button => button.addEventListener("click", showRestHoursForecast));

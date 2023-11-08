@@ -46,7 +46,7 @@
           </button>
         </div>
         <section class="js-saved-cities saved-cities">
-          <h3>Elmentett városok</h3>
+          <p>Elmentett városok</p>
           <div class="js-saved-cities-div saved-cities-div"></div>
         </section>
       </section>
@@ -70,24 +70,29 @@
         </button>
       </section>
       <section class="js-hourly-forecast-section hourly-forecast-section">
-        <h3>Óránkénti előrejelzés</h3>
+        <div class="hourly-forecast-heading">
+          <h3>Óránkénti előrejelzés</h3>
+          <button
+            class="js-twenty-four-hours-forecast-button twenty-four-hours-forecast-button btn btn-primary"
+            type="button"
+          >
+            24 órás előrejelzés
+          </button>
+        </div>
+        <p class="js-next-hours-p next-hours-p">Következő 3 óra</p>
         <div class="js-hourly-forecast-div hourly-forecast-div">
-          <div class="js-hourly-today-div hourly-today-div"></div>
-          <div
-            class="js-hourly-tomorrow-div hourly-tomorrow-div invisible"
-          ></div>
-          <div
-            class="js-hourly-day-after-tomorrow-div hourly-day-after-tomorrow-div invisible"
-          ></div>
+          <div class="js-hourly-today-div hourly-today-div">
+            <div class="js-first-three-hours-div first-three-hours-div"></div>
+            <div class="js-rest-hours-div rest-hours-div invisible"></div>
+          </div>
         </div>
         <button
-          class="js-three-days-forecast-button three-days-forecast-button btn btn-primary"
+          class="js-twenty-four-hours-forecast-button twenty-four-hours-forecast-button btn btn-primary"
           type="button"
         >
           24 órás előrejelzés
         </button>
       </section>
-      <!-- TODO órás előrejelzés -->
     </main>
     <footer>
       <p>2023 &copy; Kis Tamás</p>
@@ -100,6 +105,7 @@
       <a href="https://github.com/tamas100/weather-app" target="_blank"
         ><i class="bi bi-github btn-primary"></i
       ></a>
+      <!-- TODO Up -->
     </footer>
     <script src="./main.js"></script>
   </body>
