@@ -69,19 +69,37 @@
           3 napos előrejelzés
         </button>
       </section>
+      <section class="js-hourly-forecast-section hourly-forecast-section">
+        <h3>Óránkénti előrejelzés</h3>
+        <div class="js-hourly-forecast-div hourly-forecast-div">
+          <div class="js-hourly-today-div hourly-today-div"></div>
+          <div
+            class="js-hourly-tomorrow-div hourly-tomorrow-div invisible"
+          ></div>
+          <div
+            class="js-hourly-day-after-tomorrow-div hourly-day-after-tomorrow-div invisible"
+          ></div>
+        </div>
+        <button
+          class="js-three-days-forecast-button three-days-forecast-button btn btn-primary"
+          type="button"
+        >
+          24 órás előrejelzés
+        </button>
+      </section>
       <!-- TODO órás előrejelzés -->
     </main>
     <footer>
       <p>2023 &copy; Kis Tamás</p>
-      <a href="https://github.com/tamas100/weather-app" target="_blank"
-        ><i class="bi bi-github btn-primary"></i
-      ></a>
       <a href="https://www.weatherapi.com/" title="Free Weather API"
         ><img
           src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
           alt="Weather data by WeatherAPI.com"
           border="0"
       /></a>
+      <a href="https://github.com/tamas100/weather-app" target="_blank"
+        ><i class="bi bi-github btn-primary"></i
+      ></a>
     </footer>
     <script src="./main.js"></script>
   </body>

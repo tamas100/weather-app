@@ -114,6 +114,10 @@ function renderPlusTwoDaysForecast() {
 function renderForecastDayAfterTomorrow(weather) {
     let html = `
         <p>Holnapután</p>
+        <div>
+            <img src="https:${weather.forecast.forecastday[2].day.condition.icon}" alt="${weather.forecast.forecastday[2].day.condition.text}"/>
+        </div>
+        <p>${weather.forecast.forecastday[2].day.condition.text}</p>
         <h3 class="max-temp">${weather.forecast.forecastday[2].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[2].day.mintemp_c}°C</h3>
         <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[2].astro.sunrise}</p>
@@ -124,6 +128,10 @@ function renderForecastDayAfterTomorrow(weather) {
 function renderForecastTomorrow(weather) {
     let html = `
         <p>Holnap</p>
+        <div>
+            <img src="https:${weather.forecast.forecastday[1].day.condition.icon}" alt="${weather.forecast.forecastday[1].day.condition.text}"/>
+        </div>
+        <p>${weather.forecast.forecastday[1].day.condition.text}</p>
         <h3 class="max-temp">${weather.forecast.forecastday[1].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[1].day.mintemp_c}°C</h3>
         <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[1].astro.sunrise}</p>
@@ -135,6 +143,10 @@ function renderForecastTomorrow(weather) {
 function renderForecastToday(weather) {
     let html = `
         <p>Ma</p>
+        <div>
+            <img src="https:${weather.forecast.forecastday[0].day.condition.icon}" alt="${weather.forecast.forecastday[0].day.condition.text}"/>
+        </div>
+        <p>${weather.forecast.forecastday[0].day.condition.text}</p>
         <h3 class="max-temp">${weather.forecast.forecastday[0].day.maxtemp_c}°C</h3>
         <h3 class="min-temp">${weather.forecast.forecastday[0].day.mintemp_c}°C</h3>
         <p><i class="bi bi-sunrise"></i> ${weather.forecast.forecastday[0].astro.sunrise}</p>
