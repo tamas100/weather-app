@@ -70,6 +70,11 @@ a {
   outline: 2px solid var(--main-grey);
   border-color: var(--main-grey);
 }
+
+.saved-city-button:hover {
+  animation-name: scale;
+  animation-duration: 500ms;
+}
 /* -------------- Icons ------------------------------------------------*/
 .bi-github {
   font-size: 2rem;
@@ -97,6 +102,34 @@ a {
 
 .bi-list {
   font-size: 4rem;
+}
+/* -------------- Keyframes ------------------------------------------------*/
+@keyframes rotate {
+  10% {
+    rotate: (12deg);
+  }
+  30%,
+  70% {
+    transform: rotate(-15deg);
+  }
+  50%,
+  85% {
+    transform: rotate(35deg);
+  }
+}
+
+@keyframes scale {
+  10% {
+    scale: (1.1, 1.1);
+  }
+  30%,
+  70% {
+    transform: scale(1.3, 1.3);
+  }
+  50%,
+  85% {
+    transform: scale(1.2, 1.2);
+  }
 }
 /* -------------- Navbar ------------------------------------------------*/
 .navbar {
@@ -149,8 +182,9 @@ a {
 }
 
 .hamburger-menu-button:hover {
-  /*TODO animation*/
   cursor: pointer;
+  animation-name: rotate;
+  animation-duration: 500ms;
 }
 /* -------------- Cards ------------------------------------------------*/
 
