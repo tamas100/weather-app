@@ -1,4 +1,4 @@
-//-------------------- Constants
+//-------------------- Constants -----------------------------------------------------------------
 const $form = document.querySelector(".js-city-form");
 const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
@@ -21,6 +21,7 @@ const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button")
 const $navMenuList = document.querySelector(".js-nav-menu-list");
 const $hamburgerIcon = document.querySelector(".bi-list");
 
+//----------------------------- Get the current position of the user -----------------------------------
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
 }
@@ -36,6 +37,7 @@ function fetchPosition(position) {
 
 const position = navigator.geolocation.getCurrentPosition(fetchPosition);
 
+//-------------------------- Create a button of a saved city ------------------------------------- 
 function makeSavedCityButtons(savedCities) {
     let html = '';
     if (savedCities.length > 0) {
@@ -44,6 +46,24 @@ function makeSavedCityButtons(savedCities) {
         }
     }
     return html;
+}
+//------------------------------- Save the current city ----------------------------------------------------------
+function saveCity(event) {
+    const weatherElement = document.querySelector('.weather-div');
+    // Checks if there is valid weather data
+    if (weatherElement) {
+        const cityName = $locationName.innerText;
+        // check if savedCities doesn't contain the current city and check its length as well...
+        if (!savedCities.includes(cityName) && savedCities.length < 3) { // if true then add the city to savedCities
+            savedCities.push(cityName);
+        } // if 
+        else if (!savedCities.includes(cityName) && savedCities.length === 3) { // if true, the user decides which city to overwrite
+            $warningSection.innerHTML = renderDecideOverwrite();
+        } else {
+            $warningSection.innerHTML = renderCityAlreadySaved(); // the city has been already saved
+        }
+    }
+    $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
 }
 
 function renderDecideOverwrite() {
@@ -65,47 +85,35 @@ function renderCityAlreadySaved() {
     `;
     return html;
 }
-
-function saveCity(event) {
-    const weatherElement = document.querySelector('.weather-div');
-    // Checks if there is valid weather data
-    if (weatherElement) {
-        const cityName = $locationName.innerText;
-        if (!savedCities.includes(cityName) && savedCities.length < 3) {
-            savedCities.push(cityName);
-        }
-        else if (!savedCities.includes(cityName) && savedCities.length === 3) {
-            $warningSection.innerHTML = renderDecideOverwrite();
-        } else {
-            $warningSection.innerHTML = renderCityAlreadySaved();
-        }
-    }
-    $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
-}
-
-
+// -------------------------------- Render the current weather --------------------------------------------------
 function renderWeather(weather) {
     let html =
-        `        
-        <div>
-            <h1>${weather.current.temp_c}°C</h1>
-            <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
-        </div>
-        <p>${weather.current.condition.text}</p>
-        <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
-        <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>        
-        <p>Csapadék: ${weather.current.precip_mm}mm</p>
-        <div class="js-weather-details-div invisible">
-            <p>Széllökés: ${weather.current.gust_kph}km/h</p>        
-            <p>Légnyomás: ${weather.current.pressure_mb}hPa</p>        
-            <p>Páratartalom: ${weather.current.humidity}%</p>        
-            <p>Látótávolság: ${weather.current.vis_km}km</p>  
-        </div>
+        `
+        <div class="current-weather-div">
+            <div>
+                <h1>${weather.current.temp_c}°C</h1>
+                <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
+            </div>
+            <div class="weather-conditions-div">
+                <div>            
+                    <p>${weather.current.condition.text}</p>
+                    <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
+                    <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>        
+                    <p>Csapadék: ${weather.current.precip_mm}mm</p>
+                    </div>    
+                <div class="js-weather-details-div invisible">
+                    <p>Széllökés: ${weather.current.gust_kph}km/h</p>        
+                    <p>Légnyomás: ${weather.current.pressure_mb}hPa</p>        
+                    <p>Páratartalom: ${weather.current.humidity}%</p>        
+                    <p>Látótávolság: ${weather.current.vis_km}km</p>  
+                </div>            
+            </div>
+        </div>    
         <button class="js-weather-details-button btn btn-primary">Részletes időjárás</button>      
     `;
     return html;
 }
-
+// ------------------------------ Forecast section ---------------------------------------------------
 function changeForecastButtonName() {
     if ($forecastContainer.classList.contains("space-around")) {
         $threedaysForecastButton.innerText = '1 napos előrejelzés';
@@ -167,7 +175,7 @@ function renderForecastToday(weather) {
     `;
     return html;
 }
-
+// ----------------------------- Hourly forecast section ------------------------------------------------------------
 function getCurrentHour(weather) {
     return parseInt(weather.location.localtime.slice(11, 13));
 }
@@ -212,16 +220,16 @@ function renderRestHoursForecast(weather) {
     for (let i = currentHour + 4; i < 24; i++) {
         html += createHourlyForecastHtml(weather, 0, i);
     }
-    for (let i = 0; i < 24 - currentHour - 1; i++) {
+    for (let i = 0; i < currentHour; i++) {
         html += createHourlyForecastHtml(weather, 1, i);
     }
 
     return html;
 }
-
+// --------------------------------- The main render function --------------------------------------
 function renderResponse(weather) {
     let html = ``;
-    // validálás, sikertelen keresésnél "error" az objektum egyetlen kulcsa
+    // validation, on unsuccessful search "error" is the only key of the object
     if (!weather.error) {
         $locationName.innerText = weather.location.name;
         html += `<div class="weather-div">${renderWeather(weather)}</div>`;
@@ -235,7 +243,7 @@ function renderResponse(weather) {
     }
     $container.innerHTML = html;
 }
-
+//------------------------------ Get the position of the city the user choosed -------------------------------------------
 function getApiUrl(city) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
 }
@@ -246,34 +254,35 @@ function fetchCity(city) {
         .then(renderResponse);
     clearErrorSection()
 }
-
+//------------------------------- Get the name of searched city -----------------------------------------------
 function formSubmitted(event) {
-    // Megakadályozzuk az oldal újratöltődését
+    // Prevent page reloading
     event.preventDefault();
     const city = $searchInput.value.trim();
-    // törli a keresőmezőt a keresés után
+    // clears the search box after the search
     $searchInput.value = '';
-    // Ennek a tartalmát minden kereséskor törölni kell!
+    // Its contents must be deleted every time you search!
     $container.innerHTML = '';
     // Validáció
     if (city.length > 0) {
-        // Ennek a tartalmát minden kereséskor törölni kell!
+        // Its contents must be deleted every time you search!
         clearErrorSection();
         fetchCity(city)
     } else {
         $errorSection.innerHTML = `<p>Sikertelen keresés!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
 }
-
+//------------------------- Get the datas of a saved city -------------------------------------------------
 function loadCity(event) {
+    // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
     if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
-        fetchCity(event.target.innerText);
+        fetchCity(event.target.innerText); // the text of a savedcity button
     } else {
         overwriteSavedCity(event);
     }
 }
 
-function overwriteSavedCity(event) {
+function overwriteSavedCity(event) { // TODO
     savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
     clearWarningSection()

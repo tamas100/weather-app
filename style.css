@@ -70,11 +70,6 @@ a {
   outline: 2px solid var(--main-grey);
   border-color: var(--main-grey);
 }
-
-.saved-city-button:hover {
-  animation-name: scale;
-  animation-duration: 500ms;
-}
 /* -------------- Icons ------------------------------------------------*/
 .bi-github {
   font-size: 2rem;
@@ -164,10 +159,6 @@ a {
   z-index: -1;
 }
 
-.invisible {
-  display: none;
-}
-
 .navbar a {
   text-decoration: none;
   color: var(--main-white);
@@ -189,7 +180,7 @@ a {
 /* -------------- Cards ------------------------------------------------*/
 
 .city-form,
-.weather-div,
+.city-weather,
 .section-result,
 .forecast-section,
 .hourly-forecast-section {
@@ -234,18 +225,22 @@ a {
   outline: 0.4rem solid var(--light-grey-2);
 }
 /*--------------- Result --------------------------------------------------*/
-
-/* Majd jó lesz a desktop nézethez */
-/* .section-result {
+.section-result {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1.6rem;
-} */
+}
+
+.div-result {
+  margin: 0 auto;
+}
 
 .saved-cities {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0rem;
 }
 
@@ -260,6 +255,11 @@ a {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.saved-city-button:hover {
+  animation-name: scale;
+  animation-duration: 500ms;
 }
 /*--------------- Error - Warning --------------------------------------------------*/
 
@@ -281,9 +281,26 @@ a {
   padding: 1.6rem;
   border: 10px solid var(--main-blue);
 }
-/*--------------- Forecast --------------------------------------------------*/
-.forecast-div {
+/*--------------- Current Weather --------------------------------------------------*/
+.weather-conditions-div {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/*--------------- Forecast --------------------------------------------------*/
+.forecast-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.forecast-div,
+.forecast-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -306,6 +323,22 @@ a {
 .hourly-forecast-heading {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+
+  gap: 1rem;
+}
+
+.first-three-hours-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.rest-hours-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 1rem;
 }
 /*--------------- Footer --------------------------------------------------*/
@@ -320,5 +353,9 @@ footer {
   border: 0;
   background-color: var(--main-yellow);
   padding: 1.6rem 1.6rem;
+}
+/* -------------- To Hide Something ------------------------------------------------*/
+.invisible {
+  display: none;
 }
 /*TODO breakpoints*/
