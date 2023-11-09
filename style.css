@@ -21,7 +21,7 @@
   font-family: "Nunito Sans", sans-serif;
   /* border: 1px solid green; */
 }
-
+html,
 body {
   scroll-behavior: smooth;
   background-color: var(--very-light-grey);
@@ -182,10 +182,10 @@ footer,
 footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
   font-weight: bold;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .bi-github {
@@ -197,6 +197,15 @@ footer {
   font-size: 2rem;
 }
 
+.nav-top {
+  position: fixed;
+  bottom: 1rem;
+  right: 0.5rem;
+  font-size: 3rem;
+  background-color: var(--main-grey);
+  color: var(--main-white);
+}
+
 .bi-sunrise,
 .bi-sunset {
   font-size: 2rem;
@@ -206,10 +215,6 @@ footer {
 .invisible {
   display: none;
 }
-
-/* .space-around {
-  justify-content: space-around;
-} */
 
 .forecast-div {
   display: flex;
