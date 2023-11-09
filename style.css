@@ -19,7 +19,6 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
-  /* border: 1px solid green; */
 }
 html,
 body {
@@ -273,18 +272,14 @@ a {
 .hourly-forecast-heading {
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
 }
-
-/* .twenty-four-hours-forecast-button {
-  margin-top: 1.6rem;
-} */
 /*--------------- Footer --------------------------------------------------*/
 
 footer {
   width: 100%;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   flex-wrap: wrap;
   font-weight: bold;
   gap: 2rem;
@@ -292,3 +287,4 @@ footer {
   background-color: var(--main-yellow);
   padding: 1.6rem 1.6rem;
 }
+/*TODO breakpoints*/
