@@ -17,7 +17,20 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <!-- TODO navbar -->
+    <!------------------------ navbar ------------------------------------>
+    <header>
+      <nav id="navbar" class="navbar">
+        <div class="js-navbar-text navbar-text"><p>Időjárás</p></div>
+        <ul class="js-nav-menu-list nav-menu-list invisible">
+          <li><a href="#current-weather">Aktuális időjárás</a></li>
+          <li><a href="#forecast">Előrejelzés</a></li>
+          <li><a href="#hourly-forecast">Óránkénti előrejelzés</a></li>
+        </ul>
+        <div class="js-hamburger-menu-button hamburger-menu-button">
+          <i class="bi bi-list"></i>
+        </div>
+      </nav>
+    </header>
     <main>
       <section id="search" class="section-search">
         <form id="search" action="#" class="js-city-form city-form">
@@ -52,8 +65,11 @@
       </section>
       <section class="js-error error"></section>
       <section class="js-warning warning"></section>
-      <section class="js-city-weather city-weather"></section>
-      <section class="js-forecast-section forecast-section">
+      <section
+        id="current-weather"
+        class="js-city-weather city-weather"
+      ></section>
+      <section id="forecast" class="js-forecast-section forecast-section">
         <h3>Előrejelzés</h3>
         <div class="js-forecast-div forecast-div">
           <div class="js-today-div today-div"></div>
@@ -69,7 +85,10 @@
           3 napos előrejelzés
         </button>
       </section>
-      <section class="js-hourly-forecast-section hourly-forecast-section">
+      <section
+        id="hourly-forecast"
+        class="js-hourly-forecast-section hourly-forecast-section"
+      >
         <div class="hourly-forecast-heading">
           <h3>Óránkénti előrejelzés</h3>
           <button

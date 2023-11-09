@@ -1,4 +1,4 @@
-
+//-------------------- Constants
 const $form = document.querySelector(".js-city-form");
 const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
@@ -17,6 +17,9 @@ const $firstThreeHoursForecastContainer = document.querySelector(".js-first-thre
 const $restHoursForecastContainer = document.querySelector(".js-rest-hours-div");
 const $twentyFourHoursForecastButtons = document.querySelectorAll(".js-twenty-four-hours-forecast-button");
 const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
+const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button");
+const $navMenuList = document.querySelector(".js-nav-menu-list");
+const $hamburgerIcon = document.querySelector(".bi-list");
 
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
@@ -64,8 +67,8 @@ function renderCityAlreadySaved() {
 }
 
 function saveCity(event) {
-    // Ellenőrizd, hogy van-e érvényes időjárásadat az oldalon
     const weatherElement = document.querySelector('.weather-div');
+    // Checks if there is valid weather data
     if (weatherElement) {
         const cityName = $locationName.innerText;
         if (!savedCities.includes(cityName) && savedCities.length < 3) {
@@ -329,3 +332,16 @@ $errorSection.addEventListener("click", clearErrorSection);
 $threedaysForecastButton.addEventListener("click", renderPlusTwoDaysForecast);
 $container.addEventListener("click", renderWeatherDetails);
 [...$twentyFourHoursForecastButtons].forEach(button => button.addEventListener("click", showRestHoursForecast));
+
+//---------------- Hamburger Menu-----------------------------------------
+function toggleHamburgerMenu() {
+    // add or remove the class "invisible" to $navMenuList
+    $navMenuList.classList.toggle("invisible");
+    // if $navMenuList's classlist contains "invisible" toggles "bi-x" to $hamburgerIcon
+    $navMenuList.classList.contains("invisible") ?
+        $hamburgerIcon.classList.toggle("bi-x") :
+        $hamburgerIcon.classList.toggle("bi-x");
+}
+// click works on the navMenuList as well
+$hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
+$navMenuList.addEventListener("click", toggleHamburgerMenu);

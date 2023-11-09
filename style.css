@@ -25,6 +25,8 @@ html,
 body {
   scroll-behavior: smooth;
   background-color: var(--very-light-grey);
+  padding-top: 5.8rem;
+  scroll-padding-top: 11.5rem;
 }
 
 h1 {
@@ -45,7 +47,7 @@ p,
 a {
   font-size: 2rem;
 }
-
+/* -------------- Buttons ------------------------------------------------*/
 .btn {
   font-size: 1.6rem;
   line-height: 2.4rem;
@@ -69,11 +71,93 @@ a {
   outline: 2px solid var(--main-grey);
   border-color: var(--main-grey);
 }
+/* -------------- Icons ------------------------------------------------*/
+.bi-github {
+  font-size: 2rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.bi-x {
+  font-size: 2rem;
+}
+
+.nav-top {
+  position: fixed;
+  bottom: 1rem;
+  right: 0.5rem;
+  font-size: 3rem;
+  background-color: var(--main-grey);
+  color: var(--main-white);
+}
+
+.bi-sunrise,
+.bi-sunset {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.bi-list {
+  font-size: 4rem;
+}
+/* -------------- Navbar ------------------------------------------------*/
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--main-yellow);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  z-index: 0;
+}
+
+.navbar-text p {
+  font-size: 3.3rem;
+  font-weight: 700;
+}
+
+.nav-menu-list {
+  background-color: var(--main-grey);
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  align-items: center;
+  position: absolute;
+  width: 100vw;
+  top: 9rem;
+  left: 0;
+  z-index: -1;
+}
+
+.invisible {
+  display: none;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--main-white);
+  font-weight: 700;
+  font-size: 3rem;
+  position: relative;
+  padding-bottom: 0;
+}
+
+.navbar a:hover {
+  cursor: pointer;
+}
+
+.hamburger-menu-button:hover {
+  /*TODO animation*/
+  cursor: pointer;
+}
+/* -------------- Cards ------------------------------------------------*/
 
 .city-form,
 .weather-div,
 .section-result,
-footer,
 .forecast-section,
 .hourly-forecast-section {
   background-color: var(--main-yellow);
@@ -91,6 +175,7 @@ footer,
 .hourly-forecast-section {
   margin-bottom: 2rem;
 }
+/*--------------- Search --------------------------------------------------*/
 
 .city-label {
   display: flex;
@@ -115,6 +200,7 @@ footer,
 .form-input:focus {
   outline: 0.4rem solid var(--light-grey-2);
 }
+/*--------------- Result --------------------------------------------------*/
 
 /* Majd jó lesz a desktop nézethez */
 /* .section-result {
@@ -142,6 +228,7 @@ footer,
   gap: 1rem;
   flex-wrap: wrap;
 }
+/*--------------- Error - Warning --------------------------------------------------*/
 
 .error,
 .warning {
@@ -161,61 +248,7 @@ footer,
   padding: 1.6rem;
   border: 10px solid var(--main-blue);
 }
-
-.max-temp {
-  color: var(--main-red);
-}
-
-.min-temp {
-  color: var(--main-blue);
-}
-
-.hourly-forecast-heading {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-/* .twenty-four-hours-forecast-button {
-  margin-top: 1.6rem;
-} */
-
-footer {
-  display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
-  flex-wrap: wrap;
-  font-weight: bold;
-  gap: 2rem;
-}
-
-.bi-github {
-  font-size: 2rem;
-  padding: 0.2rem 0.4rem;
-}
-
-.bi-x {
-  font-size: 2rem;
-}
-
-.nav-top {
-  position: fixed;
-  bottom: 1rem;
-  right: 0.5rem;
-  font-size: 3rem;
-  background-color: var(--main-grey);
-  color: var(--main-white);
-}
-
-.bi-sunrise,
-.bi-sunset {
-  font-size: 2rem;
-  line-height: 2rem;
-}
-
-.invisible {
-  display: none;
-}
-
+/*--------------- Forecast --------------------------------------------------*/
 .forecast-div {
   display: flex;
   flex-wrap: wrap;
@@ -227,4 +260,35 @@ footer {
 
 .forecast-div div :first-child {
   font-weight: 700;
+}
+
+.max-temp {
+  color: var(--main-red);
+}
+
+.min-temp {
+  color: var(--main-blue);
+}
+/*--------------- Hourly Forecast --------------------------------------------------*/
+.hourly-forecast-heading {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* .twenty-four-hours-forecast-button {
+  margin-top: 1.6rem;
+} */
+/*--------------- Footer --------------------------------------------------*/
+
+footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  font-weight: bold;
+  gap: 2rem;
+  border: 0;
+  background-color: var(--main-yellow);
+  padding: 1.6rem 1.6rem;
 }
