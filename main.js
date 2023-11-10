@@ -48,7 +48,10 @@ function fetchPosition(position) {
         .then(renderResponse);
 }
 // calls fetchPosition() with the datas of the user's position
-const position = navigator.geolocation.getCurrentPosition(fetchPosition);
+function getUserPosition() {
+    navigator.geolocation.getCurrentPosition(fetchPosition);
+}
+
 
 //-------------------------- Create a button of a saved city ------------------------------------- 
 // If savedCities is not empty creates citybuttons
@@ -114,10 +117,10 @@ function renderWeather(weather) {
                     <p>${weather.current.condition.text}</p>
                     <p>Hőérzet: ${weather.current.feelslike_c}°C</p>
                     <p>Szélsebesség: ${weather.current.wind_kph}km/h</p>        
-                    <p>Csapadék: ${weather.current.precip_mm}mm</p>
-                    </div>    
-                <div class="js-weather-details-div invisible">
                     <p>Széllökés: ${weather.current.gust_kph}km/h</p>        
+                </div>    
+                <div class="js-weather-details-div invisible">
+                    <p>Csapadék: ${weather.current.precip_mm}mm</p>
                     <p>Légnyomás: ${weather.current.pressure_mb}hPa</p>        
                     <p>Páratartalom: ${weather.current.humidity}%</p>        
                     <p>Látótávolság: ${weather.current.vis_km}km</p>  
@@ -263,6 +266,8 @@ function renderResponse(weather) {
         $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather)
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
+        // load user's current position
+        getUserPosition();
     }
     $container.innerHTML = html;
 }
@@ -278,7 +283,7 @@ function fetchCity(city) {
         .then(renderResponse);
     clearErrorSection()
 }
-//------------------------------- Get the name of searched city -----------------------------------------------
+//------------------------------- Get the name of the searched city -----------------------------------------------
 function formSubmitted(event) {
     // Prevent page reloading
     event.preventDefault();
@@ -292,8 +297,10 @@ function formSubmitted(event) {
         // Its contents must be deleted every time you search!
         clearErrorSection();
         fetchCity(city)
-    } else { // TODO load current location
+    } else {
         $errorSection.innerHTML = `<p>Sikertelen keresés!<i id="button-icon" class="bi bi-x"></i></p>`;
+        // load user's current position
+        getUserPosition();
     }
 }
 //------------------------- Get the datas of a saved city -------------------------------------------------
@@ -374,4 +381,4 @@ $container.addEventListener("click", renderWeatherDetails);
 [...$twentyFourHoursForecastButtons]
     .forEach(button => button.addEventListener("click", showRestHoursForecast));
 
-
+getUserPosition()
