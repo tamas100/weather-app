@@ -123,8 +123,10 @@ function renderWeather(weather) {
                     <p>Látótávolság: ${weather.current.vis_km}km</p>  
                 </div>            
             </div>
-        </div>    
+        </div>
+        <div class="weather-details-button-div">
         <button class="js-weather-details-button btn btn-primary">Részletes időjárás</button>      
+        </div>    
     `;
     return html;
 }
@@ -132,7 +134,7 @@ function renderWeather(weather) {
 // the innerText depends on the visibility of the 3 days forecast
 function changeForecastButtonName() {
     if ($forecastContainer.classList.contains("three-days")) {
-        $threedaysForecastButton.innerText = '1 napos előrejelzés';
+        $threedaysForecastButton.innerText = 'Csak a mai előrejelzés';
     } else {
         $threedaysForecastButton.innerText = '3 napos előrejelzés';
     }
@@ -290,7 +292,7 @@ function formSubmitted(event) {
         // Its contents must be deleted every time you search!
         clearErrorSection();
         fetchCity(city)
-    } else {
+    } else { // TODO load current location
         $errorSection.innerHTML = `<p>Sikertelen keresés!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
 }

@@ -19,6 +19,8 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
+  /* ---------------- Test borders -----------------------------*/
+  /* border: 1px solid green; */
 }
 html,
 body {
@@ -234,7 +236,9 @@ a {
 }
 
 .div-result {
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .saved-cities {
@@ -282,29 +286,21 @@ a {
   border: 10px solid var(--main-blue);
 }
 /*--------------- Current Weather --------------------------------------------------*/
-.weather-div,
-.current-weather-div,
-.current-weather-div * {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .weather-conditions-div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-/*--------------- Forecast --------------------------------------------------*/
-.forecast-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
-.forecast-div,
-.forecast-section {
+.weather-details-button-div {
+  display: flex;
+  justify-content: center;
+}
+/*--------------- Forecast --------------------------------------------------*/
+.forecast-section :first-child {
+  text-align: center;
+}
+.forecast-div {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -317,6 +313,11 @@ a {
 
 .forecast-div div :first-child {
   font-weight: 700;
+}
+
+.forecast-button-div {
+  display: flex;
+  justify-content: center;
 }
 
 .max-temp {
@@ -338,20 +339,6 @@ a {
   align-items: center;
   gap: 1rem;
 }
-
-.first-three-hours-div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.rest-hours-div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
-}
 /*--------------- Footer --------------------------------------------------*/
 
 footer {
@@ -369,4 +356,38 @@ footer {
 .invisible {
   display: none;
 }
-/*TODO breakpoints*/
+/* -------------- Breakpoints ------------------------------------------------*/
+@media (min-width: 576px) {
+  /*--------------- Result --------------------------------------------------*/
+  .section-result {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .div-result {
+    margin: 0;
+  }
+  /*--------------- Current Weather --------------------------------------------------*/
+  .current-weather-div {
+    display: flex;
+
+    justify-content: space-around;
+  }
+
+  .weather-conditions-div {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  /*--------------- Forecast --------------------------------------------------*/
+  .forecast-div {
+    display: flex;
+    justify-content: space-around;
+  }
+  /*--------------- Hourly Forecast --------------------------------------------------*/
+  .hourly-today-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+}
