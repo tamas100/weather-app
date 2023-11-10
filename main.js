@@ -13,19 +13,32 @@ const $forecastTodayContainer = document.querySelector(".js-today-div");
 const $forecastTomorrowContainer = document.querySelector(".js-tomorrow-div");
 const $forecastDayAfterTomorrowContainer = document.querySelector(".js-day-after-tomorrow-div");
 const $threedaysForecastButton = document.querySelector(".js-three-days-forecast-button");
-const $firstThreeHoursForecastContainer = document.querySelector(".js-first-three-hours-div");
-const $restHoursForecastContainer = document.querySelector(".js-rest-hours-div");
+const $hoursForecastContainer = document.querySelector(".js-hourly-today-div");
 const $twentyFourHoursForecastButtons = document.querySelectorAll(".js-twenty-four-hours-forecast-button");
 const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
 const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button");
 const $navMenuList = document.querySelector(".js-nav-menu-list");
 const $hamburgerIcon = document.querySelector(".bi-list");
 
+//---------------- Hamburger Menu-----------------------------------------
+function toggleHamburgerMenu() {
+    // add or remove the class "invisible" to $navMenuList
+    $navMenuList.classList.toggle("invisible");
+    // if $navMenuList's classlist contains "invisible" toggles "bi-x" to $hamburgerIcon
+    $navMenuList.classList.contains("invisible") ?
+        $hamburgerIcon.classList.toggle("bi-x") :
+        $hamburgerIcon.classList.toggle("bi-x");
+}
+$hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
+// clicks work on the navMenuList as well
+$navMenuList.addEventListener("click", toggleHamburgerMenu);
+
 //----------------------------- Get the current position of the user -----------------------------------
+// inserts the API key and the coordinates into the API URL
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
 }
-
+// extrats the coordinates from the geolocation datas and fetches with them
 function fetchPosition(position) {
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
@@ -34,10 +47,11 @@ function fetchPosition(position) {
         .then(response => response.json())
         .then(renderResponse);
 }
-
+// calls fetchPosition() with the datas of the user's position
 const position = navigator.geolocation.getCurrentPosition(fetchPosition);
 
 //-------------------------- Create a button of a saved city ------------------------------------- 
+// If savedCities is not empty creates citybuttons
 function makeSavedCityButtons(savedCities) {
     let html = '';
     if (savedCities.length > 0) {
@@ -63,9 +77,10 @@ function saveCity(event) {
             $warningSection.innerHTML = renderCityAlreadySaved(); // the city has been already saved
         }
     }
+    //calls the function to create citybuttons
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
 }
-
+// shows a warning message
 function renderDecideOverwrite() {
     let html =
         `
@@ -75,7 +90,7 @@ function renderDecideOverwrite() {
     `;
     return html;
 }
-
+// shows a warning message
 function renderCityAlreadySaved() {
     let html =
         `
@@ -114,18 +129,19 @@ function renderWeather(weather) {
     return html;
 }
 // ------------------------------ Forecast section ---------------------------------------------------
+// the innerText depends on the visibility of the 3 days forecast
 function changeForecastButtonName() {
-    if ($forecastContainer.classList.contains("space-around")) {
+    if ($forecastContainer.classList.contains("three-days")) {
         $threedaysForecastButton.innerText = '1 napos előrejelzés';
     } else {
         $threedaysForecastButton.innerText = '3 napos előrejelzés';
     }
 }
-
+// changes the visibility of the 3 days forecast and 
 function renderPlusTwoDaysForecast() {
     $forecastTomorrowContainer.classList.toggle("invisible");
     $forecastDayAfterTomorrowContainer.classList.toggle("invisible");
-    $forecastContainer.classList.toggle("space-around");
+    $forecastContainer.classList.toggle("three-days");
     changeForecastButtonName();
 }
 
@@ -176,14 +192,16 @@ function renderForecastToday(weather) {
     return html;
 }
 // ----------------------------- Hourly forecast section ------------------------------------------------------------
+// extracts the first two digits of the current hour from a string and converts them to an integer
 function getCurrentHour(weather) {
     return parseInt(weather.location.localtime.slice(11, 13));
 }
-
-function createHourlyForecastHtml(weather, day, hour) {
+// returns the html of one hour forecast
+function createHourlyForecastHtml(weather, day, hour, className1, className2) {
     let hourlyData = weather.forecast.forecastday[day].hour[hour];
     let html = `
-        <section class="js-section-one-hour-forecast section-one-hour-forecast">
+        <section class="js-section-one-hour-forecast section-one-hour-forecast ${className1} ${className2}">
+            ${/*extracts the time from a string*/''}
             <p class="time-p">${hourlyData.time.slice(11)}</p>   
             <div>
                 <h2>${hourlyData.temp_c}°C</h2>
@@ -203,25 +221,28 @@ function createHourlyForecastHtml(weather, day, hour) {
     `;
     return html;
 }
-
+// renders the forecast of the next three hours
 function renderfirstThreeHoursForecast(weather) {
     let html = '';
     const currentHour = getCurrentHour(weather);
     for (let i = currentHour + 1; i < currentHour + 4; i++) {
-        html += createHourlyForecastHtml(weather, 0, i);
+        // the "" are for prevent undefined classnames
+        html += createHourlyForecastHtml(weather, 0, i, "", "");
     }
     return html;
 }
 
 function renderRestHoursForecast(weather) {
     let html = '';
+    let className1 = "js-rest-hours" // for the showRestHoursForecast()
+    let className2 = "invisible" // display: none;
     const currentHour = getCurrentHour(weather);
 
     for (let i = currentHour + 4; i < 24; i++) {
-        html += createHourlyForecastHtml(weather, 0, i);
-    }
+        html += createHourlyForecastHtml(weather, 0, i, className1, className2);
+    } // parameters 0 and 1 are the index of the day. 0 = today 1 = tomorrow.
     for (let i = 0; i < currentHour; i++) {
-        html += createHourlyForecastHtml(weather, 1, i);
+        html += createHourlyForecastHtml(weather, 1, i, className1, className2);
     }
 
     return html;
@@ -236,18 +257,19 @@ function renderResponse(weather) {
         $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
-        $firstThreeHoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
-        $restHoursForecastContainer.innerHTML = renderRestHoursForecast(weather)
+        $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
+        $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather)
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
     }
     $container.innerHTML = html;
 }
 //------------------------------ Get the position of the city the user choosed -------------------------------------------
+// inserts the API key and the name of the searched city into the API URL
 function getApiUrl(city) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
 }
-
+// fetches with the searched cityname
 function fetchCity(city) {
     fetch(getApiUrl(city))
         .then(response => response.json())
@@ -263,7 +285,7 @@ function formSubmitted(event) {
     $searchInput.value = '';
     // Its contents must be deleted every time you search!
     $container.innerHTML = '';
-    // Validáció
+    // Validation
     if (city.length > 0) {
         // Its contents must be deleted every time you search!
         clearErrorSection();
@@ -276,26 +298,31 @@ function formSubmitted(event) {
 function loadCity(event) {
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
     if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
-        fetchCity(event.target.innerText); // the text of a savedcity button
+        fetchCity(event.target.innerText); // the innerText of a savedcity button
     } else {
         overwriteSavedCity(event);
     }
 }
 
-function overwriteSavedCity(event) { // TODO
+function overwriteSavedCity(event) {
+    // puts the new city in savedCities and delete the city choosen by the user
     savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
+    // creates the new citybuttons
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
+    // clears the  warning message
     clearWarningSection()
 }
-
+// ------------------------ cleaning services :-) ---------------------------------------
+// clears the  warning message
 function clearWarningSection() {
     $warningSection.innerHTML = '';
 }
-
+// clears the  error message
 function clearErrorSection() {
     $errorSection.innerHTML = '';
 }
-
+// -------------------------- Detailed weather visible/unvisible ---------------------
+// the innerText depends on the visibility of the detailed weather
 function changeDetailsButtonName() {
     if (document.querySelector(".js-weather-details-div").classList.contains("invisible")) {
         document.querySelector(".js-weather-details-button").innerText = 'Részletes időjárás';
@@ -303,32 +330,34 @@ function changeDetailsButtonName() {
         document.querySelector(".js-weather-details-button").innerText = 'Kevesebb részlet';
     }
 }
-
+// changes the visibility of the detailed weather
 function renderWeatherDetails(event) {
     if (event.target.classList.contains("js-weather-details-button")) {
         document.querySelector(".js-weather-details-div").classList.toggle("invisible");
         changeDetailsButtonName();
     }
 }
-
+// -------------------------- 24 hours forecast visible/unvisible -------------------
+// the innerText depends on the visibility of the 24 hours forecast
 function changeTwentyFourHoursForecastButtonName() {
-    if ($restHoursForecastContainer.classList.contains("invisible")) {
+    if (document.querySelector(".js-rest-hours").classList.contains("invisible")) {
         [...$twentyFourHoursForecastButtons].forEach(button => button.innerText = '24 órás előrejelzés');
     } else {
         [...$twentyFourHoursForecastButtons].forEach(button => button.innerText = '3 órás előrejelzés');
     }
 }
-
+// the innerText depends on the visibility of the 24 hours forecast
 function changeNextHoursParagraphInnerText() {
-    if ($restHoursForecastContainer.classList.contains("invisible")) {
+    if (document.querySelector(".js-rest-hours").classList.contains("invisible")) {
         $nextHoursParagraph.innerText = 'Következő 3 óra';
     } else {
         $nextHoursParagraph.innerText = 'Következő 24 óra';
     }
 }
-
+// changes the visibility of the 24 hours forecast
 function showRestHoursForecast() {
-    $restHoursForecastContainer.classList.toggle("invisible");
+    [...document.querySelectorAll(".js-rest-hours")]
+        .forEach(hour => hour.classList.toggle("invisible"));
     changeTwentyFourHoursForecastButtonName();
     changeNextHoursParagraphInnerText();
 }
@@ -340,17 +369,7 @@ $warningSection.addEventListener("click", clearWarningSection);
 $errorSection.addEventListener("click", clearErrorSection);
 $threedaysForecastButton.addEventListener("click", renderPlusTwoDaysForecast);
 $container.addEventListener("click", renderWeatherDetails);
-[...$twentyFourHoursForecastButtons].forEach(button => button.addEventListener("click", showRestHoursForecast));
+[...$twentyFourHoursForecastButtons]
+    .forEach(button => button.addEventListener("click", showRestHoursForecast));
 
-//---------------- Hamburger Menu-----------------------------------------
-function toggleHamburgerMenu() {
-    // add or remove the class "invisible" to $navMenuList
-    $navMenuList.classList.toggle("invisible");
-    // if $navMenuList's classlist contains "invisible" toggles "bi-x" to $hamburgerIcon
-    $navMenuList.classList.contains("invisible") ?
-        $hamburgerIcon.classList.toggle("bi-x") :
-        $hamburgerIcon.classList.toggle("bi-x");
-}
-// click works on the navMenuList as well
-$hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
-$navMenuList.addEventListener("click", toggleHamburgerMenu);
+

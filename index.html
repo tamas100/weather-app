@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Időjárás</title>
+    <!------------------------ Google fonts ------------------------------------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <!------------------------ Bootstrap Icons ------------------------------------------------------->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
@@ -17,7 +19,7 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <!------------------------ navbar ------------------------------------>
+    <!------------------------ navbar ------------------------------------------------------->
     <header>
       <nav id="navbar" class="navbar">
         <div class="js-navbar-text navbar-text"><p>Időjárás</p></div>
@@ -33,6 +35,7 @@
       </nav>
     </header>
     <main>
+      <!------------------------ Search ------------------------------------------------------->
       <section id="search" class="section-search">
         <form id="search" action="#" class="js-city-form city-form">
           <label class="city-label">
@@ -49,6 +52,7 @@
           </button>
         </form>
       </section>
+      <!------------------------ Search Resutls ------------------------------------------------------->
       <section class="section-result">
         <div class="div-result">
           <h2 class="js-location-name location-name"></h2>
@@ -64,12 +68,15 @@
           <div class="js-saved-cities-div saved-cities-div"></div>
         </section>
       </section>
+      <!------------------------ Error and Warning sections ------------------------------------------------------->
       <section class="js-error error"></section>
       <section class="js-warning warning"></section>
+      <!------------------------ Current Weather ------------------------------------------------------->
       <section
         id="current-weather"
         class="js-city-weather city-weather"
       ></section>
+      <!------------------------ 1 day or 3 days forecast ------------------------------------------------------->
       <section id="forecast" class="js-forecast-section forecast-section">
         <h3>Előrejelzés</h3>
         <div class="js-forecast-div forecast-div">
@@ -86,6 +93,7 @@
           3 napos előrejelzés
         </button>
       </section>
+      <!------------------------ Hourly forecast ------------------------------------------------------->
       <section
         id="hourly-forecast"
         class="js-hourly-forecast-section hourly-forecast-section"
@@ -101,10 +109,7 @@
         </div>
         <p class="js-next-hours-p next-hours-p">Következő 3 óra</p>
         <div class="js-hourly-forecast-div hourly-forecast-div">
-          <div class="js-hourly-today-div hourly-today-div">
-            <div class="js-first-three-hours-div first-three-hours-div"></div>
-            <div class="js-rest-hours-div rest-hours-div invisible"></div>
-          </div>
+          <div class="js-hourly-today-div hourly-today-div"></div>
         </div>
         <button
           class="js-twenty-four-hours-forecast-button twenty-four-hours-forecast-button btn btn-primary"
@@ -114,16 +119,20 @@
         </button>
       </section>
     </main>
+    <!------------------------ Footer ------------------------------------------------------->
     <footer>
       <p>2023 &copy; Kis Tamás</p>
       <a href="https://github.com/tamas100/weather-app" target="_blank"
         ><i class="bi bi-github btn-primary"></i
       ></a>
-      <a href="https://www.weatherapi.com/" title="Free Weather API"
+      <a
+        href="https://www.weatherapi.com/"
+        title="Free Weather"
+        API
+        target="_blank"
         ><img
           src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
           alt="Weather data by WeatherAPI.com"
-          border="0"
       /></a>
       <a href="#search"><i class="bi bi-arrow-up nav-top"></i></a>
     </footer>
