@@ -286,10 +286,13 @@ a {
   border: 10px solid var(--main-blue);
 }
 /*--------------- Current Weather --------------------------------------------------*/
+.current-weather-div {
+  text-align: center;
+}
 .weather-conditions-div {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .weather-details-button-div {
