@@ -309,7 +309,9 @@ function loadCity(event) {
     if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
         fetchCity(event.target.innerText); // the innerText of a savedcity button
     } else {
-        overwriteSavedCity(event);
+        if (event.target.classList.contains('saved-city-button')) {
+            overwriteSavedCity(event);
+        }
     }
 }
 

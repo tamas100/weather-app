@@ -2,7 +2,6 @@
 :root {
   --main-red: #ef476f;
   --main-yellow: #ffd166;
-  --main-green: #06d6a0;
   --main-blue: #118ab2;
   --main-grey: #073b4c;
   --main-white: ghostwhite;
@@ -19,9 +18,8 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
-  /* ---------------- Test borders -----------------------------*/
-  /* border: 1px solid green; */
 }
+
 html,
 body {
   scroll-behavior: smooth;
@@ -55,7 +53,7 @@ a {
   padding: 0.5rem 1.6rem;
   margin: 0.4rem;
   font-weight: bold;
-  border-style: solid;
+  border: 0;
   text-align: center;
   transition: transform 100ms;
 }
@@ -63,14 +61,12 @@ a {
 .btn-primary {
   background-color: var(--main-grey);
   color: var(--main-white);
-  border-color: var(--main-grey);
 }
 
 .btn-primary:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   outline: 2px solid var(--main-grey);
-  border-color: var(--main-grey);
 }
 /* -------------- Icons ------------------------------------------------*/
 .bi-github {
