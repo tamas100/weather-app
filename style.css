@@ -47,6 +47,7 @@ a {
   font-size: 2rem;
 }
 /* -------------- Buttons ------------------------------------------------*/
+TODO /* margin=0*/
 .btn {
   font-size: 1.6rem;
   line-height: 2.4rem;
@@ -62,7 +63,7 @@ a {
   background-color: var(--main-grey);
   color: var(--main-white);
 }
-
+TODO /*color, or border-color, :active*/
 .btn-primary:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -143,7 +144,7 @@ a {
   font-size: 3rem;
   font-weight: 700;
 }
-
+TODO /* padding */ 
 .nav-menu-list {
   background-color: var(--main-grey);
   display: flex;
@@ -207,7 +208,7 @@ a {
   font-weight: bold;
   margin: 0.2rem 0 0.8rem;
 }
-
+TODO /* change color */
 .form-input {
   padding: 1.2rem 1.2rem;
   font-size: 1.6rem;
@@ -262,7 +263,7 @@ a {
   animation-duration: 500ms;
 }
 /*--------------- Error - Warning --------------------------------------------------*/
-
+TODO /* cursor: pointer*/
 .error,
 .warning {
   margin: 2rem auto;
