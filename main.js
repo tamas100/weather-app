@@ -4,7 +4,7 @@ const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
-const savedCities = []; TODO // ----------------------  localStorage
+const savedCities = []; // TODO localStorage
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
@@ -31,7 +31,7 @@ function toggleHamburgerMenu() {
 }
 //----------------------------- Get the current position of the user -----------------------------------
 // inserts the API key and the coordinates into the API URL
-TODO // const instead of function
+//TODO const instead of function
 function getLocation(location) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
 }
@@ -233,7 +233,7 @@ function renderfirstThreeHoursForecast(weather) {
     }
     return html;
 }
-TODO // pagination
+//TODO  pagination
 function renderRestHoursForecast(weather) {
     let html = '';
     let className1 = "js-rest-hours" // for the showRestHoursForecast()
@@ -270,7 +270,7 @@ function renderResponse(weather) {
 }
 //------------------------------ Get the position of the city the user choosed -------------------------------------------
 // inserts the API key and the name of the searched city into the API URL
-TODO // const instead of function
+//TODO const instead of function
 function getApiUrl(city) {
     return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
 }
@@ -302,7 +302,7 @@ function formSubmitted(event) {
     }
 }
 //------------------------- Get the datas of a saved city -------------------------------------------------
-TODO // -------- use const isWarning =
+//TODO use const isWarning =
 function loadCity(event) {
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
     if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
@@ -313,7 +313,7 @@ function loadCity(event) {
         }
     }
 }
-TODO // --------------------------- use dataset
+// TODO use dataset
 function overwriteSavedCity(event) {
     // puts the new city in savedCities and delete the city choosen by the user
     savedCities.splice(savedCities.indexOf(event.target.innerText), 1, $locationName.innerHTML)
