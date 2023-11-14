@@ -47,12 +47,11 @@ a {
   font-size: 2rem;
 }
 /* -------------- Buttons ------------------------------------------------*/
-/*TODO  margin=0*/
 .btn {
   font-size: 1.6rem;
   line-height: 2.4rem;
   padding: 0.5rem 1.6rem;
-  margin: 0.4rem;
+  margin: 0;
   font-weight: bold;
   border: 0;
   text-align: center;
@@ -63,11 +62,14 @@ a {
   background-color: var(--main-grey);
   color: var(--main-white);
 }
-/*TODO color, or border-color, :active*/
+
 .btn-primary:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  outline: 2px solid var(--main-grey);
+}
+
+.btn-primary:active {
+  background-color: var(--main-blue);
 }
 /* -------------- Icons ------------------------------------------------*/
 .bi-github {
@@ -82,10 +84,14 @@ a {
 .nav-top {
   position: fixed;
   bottom: 1rem;
-  right: 0.5rem;
+  right: 1.5rem;
   font-size: 3rem;
   background-color: var(--main-grey);
   color: var(--main-white);
+}
+
+.nav-top:active {
+  background-color: var(--main-blue);
 }
 
 .bi-sunrise,
@@ -144,7 +150,7 @@ a {
   font-size: 3rem;
   font-weight: 700;
 }
-/*TODO  padding */
+
 .nav-menu-list {
   background-color: var(--main-grey);
   display: flex;
@@ -159,16 +165,20 @@ a {
 }
 
 .navbar a {
+  padding: 0 2rem 0;
   text-decoration: none;
   color: var(--main-white);
   font-weight: 700;
   font-size: 3rem;
   position: relative;
-  padding-bottom: 0;
 }
 
 .navbar a:hover {
   cursor: pointer;
+}
+
+.navbar a:active {
+  color: var(--main-yellow);
 }
 
 .hamburger-menu-button:hover {
@@ -208,20 +218,20 @@ a {
   font-weight: bold;
   margin: 0.2rem 0 0.8rem;
 }
-/*TODO  change color */
+
 .form-input {
   padding: 1.2rem 1.2rem;
   font-size: 1.6rem;
   color: var(--light-grey);
   font-weight: 400;
   outline: none;
-  border: 0 solid var(--very-light-grey);
+  border: 0 solid var(--main-blue);
   background-color: var(--very-light-grey-2);
   transition: border-color 0.15s, ease-in-out 0.15s, box-shadow 0.15s;
 }
 
 .form-input:focus {
-  outline: 0.4rem solid var(--light-grey-2);
+  outline: 0.4rem solid var(--main-blue);
 }
 /*--------------- Result --------------------------------------------------*/
 .section-result {
@@ -263,7 +273,6 @@ a {
   animation-duration: 500ms;
 }
 /*--------------- Error - Warning --------------------------------------------------*/
-/*TODO  cursor: pointer*/
 .error,
 .warning {
   margin: 2rem auto;
@@ -273,6 +282,7 @@ a {
   font-weight: 700;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  cursor: pointer;
 }
 
 .error p,
@@ -416,6 +426,10 @@ footer {
   .navbar a {
     font-size: 2.5rem;
     color: var(--main-grey);
+  }
+
+  .navbar a:active {
+    color: var(--main-blue);
   }
 }
 
