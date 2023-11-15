@@ -4,9 +4,9 @@ const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
-const savedCities = []; // TODO localStorage
+const savedCities = JSON.parse(localStorage.getItem("savedCities")); // retrieve the array from localStorage
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
-const isWarning = document.querySelector(".js-city-already-saved") === null;
+const isWarning = document.querySelector(".js-city-already-saved") === null; //TODO
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
 const $forecastContainer = document.querySelector(".js-forecast-div");
@@ -56,7 +56,22 @@ function makeSavedCityButtons(savedCities) {
             html += `<button class="js-saved-city-button saved-city-button btn btn-primary">${city}</button>`;
         }
     }
+    storeSavedCities(savedCities);
     return html;
+}
+
+//------------ Store savedCities in localStorage ---------------------------------
+function storeSavedCities(savedCities) {
+    const stringedSavedCities = JSON.stringify(savedCities);
+    localStorage.setItem("savedCities", stringedSavedCities);
+}
+
+function loadLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+
+function loadLocalSavedCities() {
+    $savedCitiesContainer.innerHTML = makeSavedCityButtons(loadLocalStorage("savedCities"));
 }
 //------------------------------- Save the current city ----------------------------------------------------------
 function saveCity(event) {
@@ -76,6 +91,7 @@ function saveCity(event) {
     }
     //calls the function to create citybuttons
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
+    storeSavedCities(savedCities);
     clearErrorSection();
 }
 // shows a warning message
@@ -300,7 +316,7 @@ function formSubmitted(event) {
 //------------------------- Get the datas of a saved city -------------------------------------------------
 function loadCity(event) {
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
-    if (event.target.classList.contains('saved-city-button') && isWarning) {
+    if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
         fetchCity(event.target.innerText); // the innerText of a savedcity button
         clearWarningSection();
     } else {
@@ -381,4 +397,6 @@ $hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
 // clicks work on the navMenuList as well
 $navMenuList.addEventListener("click", toggleHamburgerMenu);
 
-getUserPosition()
+getUserPosition();
+loadLocalSavedCities();
+
