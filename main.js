@@ -30,17 +30,13 @@ function toggleHamburgerMenu() {
         $hamburgerIcon.classList.toggle("bi-x");
 }
 //----------------------------- Get the current position of the user -----------------------------------
-// inserts the API key and the coordinates into the API URL
-//TODO const instead of function
-function getLocation(location) {
-    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
-}
 // extrats the coordinates from the geolocation datas and fetches with them
 function fetchPosition(position) {
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
     let location = `${latitude},${longitude}`;
-    fetch(getLocation(location))
+    const currentLocation = `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${location}&aqi=no&lang=hu&days=5&alert=yes`;
+    fetch(currentLocation)
         .then(response => response.json())
         .then(renderResponse);
 }
@@ -269,14 +265,10 @@ function renderResponse(weather) {
     $container.innerHTML = html;
 }
 //------------------------------ Get the position of the city the user choosed -------------------------------------------
-// inserts the API key and the name of the searched city into the API URL
-//TODO const instead of function
-function getApiUrl(city) {
-    return `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
-}
 // fetches with the searched cityname
 function fetchCity(city) {
-    fetch(getApiUrl(city))
+    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=14be385073aa4d85a9773012232610&q=${city}&aqi=no&lang=hu&days=5&alert=yes`;
+    fetch(apiUrl)
         .then(response => response.json())
         .then(renderResponse);
     clearErrorSection()
