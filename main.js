@@ -6,6 +6,7 @@ const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
 const savedCities = []; // TODO localStorage
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
+const isWarning = document.querySelector(".js-city-already-saved") === null;
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
 const $forecastContainer = document.querySelector(".js-forecast-div");
@@ -297,10 +298,9 @@ function formSubmitted(event) {
     }
 }
 //------------------------- Get the datas of a saved city -------------------------------------------------
-//TODO use const isWarning =
 function loadCity(event) {
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
-    if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
+    if (event.target.classList.contains('saved-city-button') && isWarning) {
         fetchCity(event.target.innerText); // the innerText of a savedcity button
         clearWarningSection();
     } else {
