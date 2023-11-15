@@ -70,11 +70,12 @@ function saveCity(event) {
         else if (!savedCities.includes(cityName) && savedCities.length === 3) { // if true, the user decides which city to overwrite
             $warningSection.innerHTML = renderDecideOverwrite();
         } else {
-            $warningSection.innerHTML = renderCityAlreadySaved(); // the city has been already saved
+            $warningSection.innerHTML = renderCityAlreadySaved(); // the city has been already saved            
         }
     }
     //calls the function to create citybuttons
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
+    clearErrorSection();
 }
 // shows a warning message
 function renderDecideOverwrite() {
@@ -286,9 +287,11 @@ function formSubmitted(event) {
     if (city.length > 0) {
         // Its contents must be deleted every time you search!
         clearErrorSection();
+        clearWarningSection();
         fetchCity(city)
     } else {
         $errorSection.innerHTML = `<p>Sikertelen keresés!<i id="button-icon" class="bi bi-x"></i></p>`;
+        clearWarningSection();
         // load user's current position
         getUserPosition();
     }
@@ -299,6 +302,7 @@ function loadCity(event) {
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
     if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
         fetchCity(event.target.innerText); // the innerText of a savedcity button
+        clearWarningSection();
     } else {
         if (event.target.classList.contains('saved-city-button')) {
             overwriteSavedCity(event);
@@ -312,7 +316,7 @@ function overwriteSavedCity(event) {
     // creates the new citybuttons
     $savedCitiesContainer.innerHTML = makeSavedCityButtons(savedCities);
     // clears the  warning message
-    clearWarningSection()
+    clearWarningSection();
 }
 // ------------------------ cleaning services :-) ---------------------------------------
 // clears the  warning message
