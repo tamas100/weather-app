@@ -18,6 +18,7 @@
   box-sizing: border-box;
   font-size: 10px;
   font-family: "Nunito Sans", sans-serif;
+  border: 1px solid red;
 }
 
 html,
@@ -29,9 +30,7 @@ body {
 }
 
 h1 {
-  display: inline-block;
   font-size: 5.6rem;
-  text-align: center;
 }
 
 h2 {
@@ -143,7 +142,8 @@ a {
   align-items: center;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  z-index: 0;
+  z-index: 1;
+  /* it vas 0 because of the hamburger menu but it is 1 because of using container-type: inline-size;  */
 }
 
 .navbar-text p {
@@ -246,6 +246,15 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  container-type: inline-size; /* to use container query units */
+}
+
+.location-name {
+  font-size: clamp(
+    2.2rem,
+    19cqi,
+    3.3rem
+  ); /* font size is adapted to the parent container */
 }
 
 .saved-cities {
@@ -296,6 +305,21 @@ a {
 .current-weather-div {
   text-align: center;
 }
+
+.basic-weather-data {
+  container-type: inline-size; /* to use container query units */
+}
+
+.current-temp {
+  display: inline-block;
+  text-align: center;
+  font-size: clamp(
+    2.6rem,
+    19cqi,
+    5.6rem
+  ); /* font size is adapted to the parent container */
+}
+
 .weather-conditions-div {
   display: flex;
   flex-wrap: wrap;
@@ -307,8 +331,17 @@ a {
   justify-content: center;
 }
 /*--------------- Forecast --------------------------------------------------*/
-.forecast-section :first-child {
+.forecast-section {
+  container-type: inline-size; /* to use container query units */
+}
+
+.forecast-section-heading {
   text-align: center;
+  font-size: clamp(
+    1.6rem,
+    19cqi,
+    2.6rem
+  ); /* font size is adapted to the parent container */
 }
 .forecast-div {
   display: flex;
@@ -339,15 +372,28 @@ a {
 }
 /*--------------- Hourly Forecast --------------------------------------------------*/
 .hourly-forecast-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
+.hourly-forecast-heading-div {
+  container-type: inline-size; /* to use container query units */
+}
+
 .hourly-forecast-heading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  font-size: clamp(1.6rem, 19cqi, 2.6rem);
+  /* font size is adapted to the parent container */
+}
+
+.twenty-four-hours-forecast-button {
+  font-size: clamp(0.5rem, 19cqi, 1.6rem);
+  /* font size is adapted to the parent container */
+}
+
+.section-one-hour-forecast-heading-div {
+  container-type: inline-size; /* to use container query units */
+}
+
+.section-one-hour-forecast-heading {
+  font-size: clamp(2.4rem, 19cqi, 3.3rem);
 }
 /*--------------- Footer --------------------------------------------------*/
 
@@ -380,8 +426,11 @@ footer {
   /*--------------- Current Weather --------------------------------------------------*/
   .current-weather-div {
     display: flex;
-
     justify-content: space-around;
+  }
+
+  .current-temp {
+    font-size: 5.6rem; /* because of the container query units */
   }
 
   .weather-conditions-div {

@@ -105,8 +105,8 @@ function renderWeather(weather) {
     let html =
         `
         <div class="current-weather-div">
-            <div>
-                <h1>${weather.current.temp_c}°C</h1>
+            <div class="basic-weather-data">
+                <h1 class="current-temp">${weather.current.temp_c}°C</h1>
                 <img src="https:${weather.current.condition.icon}" alt="${weather.current.condition.text}"/>
             </div>
             <div class="weather-conditions-div">
@@ -205,8 +205,8 @@ function createHourlyForecastHtml(weather, day, hour, className1, className2) {
         <section class="js-section-one-hour-forecast section-one-hour-forecast ${className1} ${className2}">
             ${/*extracts the time from a string*/''}
             <p class="time-p">${hourlyData.time.slice(11)}</p>   
-            <div>
-                <h2>${hourlyData.temp_c}°C</h2>
+            <div class="section-one-hour-forecast-heading-div">
+                <h2 class="section-one-hour-forecast-heading">${hourlyData.temp_c}°C</h2>
                 <img src="https:${hourlyData.condition.icon}" alt="${hourlyData.condition.text}"/>
             </div>
             <p>${hourlyData.condition.text}</p>
