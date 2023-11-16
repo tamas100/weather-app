@@ -5,7 +5,6 @@ const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
-const isWarning = document.querySelector(".js-city-already-saved") === null; //TODO
 const $locationName = document.querySelector(".js-location-name");
 const $warningSection = document.querySelector(".js-warning");
 const $forecastContainer = document.querySelector(".js-forecast-div");
@@ -72,7 +71,8 @@ function loadLocalStorage(key) {
 }
 
 function loadLocalSavedCities() {
-    if (loadLocalStorage("savedCities") !== null) { // Checks if localStorage.savedcities exists
+    const isLocalStorageSavedCities = loadLocalStorage("savedCities") !== null;
+    if (isLocalStorageSavedCities) { // Checks if localStorage.savedcities exists
         $savedCitiesContainer.innerHTML = makeSavedCityButtons(loadLocalStorage("savedCities"));
     } else {
         savedCities = []; // if localStorage.savedcities doesn't exist, savedCities wil be an empty array
@@ -320,8 +320,9 @@ function formSubmitted(event) {
 }
 //------------------------- Get the datas of a saved city -------------------------------------------------
 function loadCity(event) {
+    const isWarning = document.querySelector(".js-city-already-saved") === null;
     // when the user clicks on a savedcity button and the warning section doesn't have a warning about an already saved city then...
-    if (event.target.classList.contains('saved-city-button') && document.querySelector(".js-city-already-saved") === null) {
+    if (event.target.classList.contains('saved-city-button') && isWarning) {
         fetchCity(event.target.innerText); // the innerText of a savedcity button
         clearWarningSection();
     } else {
