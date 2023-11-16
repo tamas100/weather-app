@@ -250,7 +250,7 @@ a {
 
 .location-name {
   font-size: clamp(
-    2.2rem,
+    2rem,
     19cqi,
     3.3rem
   ); /* font size is adapted to the parent container */
@@ -421,6 +421,10 @@ footer {
 
   .div-result {
     margin: 0;
+  }
+
+  .location-name {
+    font-size: 3.3rem;
   }
   /*--------------- Current Weather --------------------------------------------------*/
   .current-weather-div {

@@ -4,7 +4,6 @@ const $container = document.querySelector(".js-city-weather");
 const $searchInput = document.querySelector("[name=city]");
 const $errorSection = document.querySelector(".error");
 const $saveButton = document.querySelector(".js-save-city-b");
-const savedCities = JSON.parse(localStorage.getItem("savedCities")); // retrieve the array from localStorage
 const $savedCitiesContainer = document.querySelector(".js-saved-cities-div");
 const isWarning = document.querySelector(".js-city-already-saved") === null; //TODO
 const $locationName = document.querySelector(".js-location-name");
@@ -20,6 +19,8 @@ const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
 const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button");
 const $navMenuList = document.querySelector(".js-nav-menu-list");
 const $hamburgerIcon = document.querySelector(".bi-list");
+
+let savedCities = JSON.parse(localStorage.getItem("savedCities")); // retrieve the array from localStorage
 
 //---------------- Hamburger Menu-----------------------------------------
 function toggleHamburgerMenu() {
@@ -71,7 +72,11 @@ function loadLocalStorage(key) {
 }
 
 function loadLocalSavedCities() {
-    $savedCitiesContainer.innerHTML = makeSavedCityButtons(loadLocalStorage("savedCities"));
+    if (loadLocalStorage("savedCities") !== null) { // Checks if localStorage.savedcities exists
+        $savedCitiesContainer.innerHTML = makeSavedCityButtons(loadLocalStorage("savedCities"));
+    } else {
+        savedCities = []; // if localStorage.savedcities doesn't exist, savedCities wil be an empty array
+    }
 }
 //------------------------------- Save the current city ----------------------------------------------------------
 function saveCity(event) {
