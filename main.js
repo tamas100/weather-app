@@ -237,37 +237,50 @@ function createHourlyForecastHtml(weather, day, hour, className1, className2) {
                 <p>Légny.: ${hourlyData.pressure_mb}hPa</p>        
                 <p>Páratart.: ${hourlyData.humidity}%</p>        
                 <p>Látótáv.: ${hourlyData.vis_km}km</p>  
-            </div>
-        </section>
-    `;
+                </div>
+                </section>
+                `;
     return html;
 }
-// renders the forecast of the next three hours
-function renderfirstThreeHoursForecast(weather) {
-    let html = '';
-    const currentHour = getCurrentHour(weather);
-    for (let i = currentHour + 1; i < currentHour + 4; i++) {
-        // the "" are for prevent undefined classnames
-        html += createHourlyForecastHtml(weather, 0, i, "", "");
-    }
-    return html;
-}
+
 //TODO  pagination
-function renderRestHoursForecast(weather) {
+function renderTwentyFourHoursForecast(weather) {
     let html = '';
-    let className1 = "js-rest-hours" // for the showRestHoursForecast()
-    let className2 = "invisible" // display: none;
     const currentHour = getCurrentHour(weather);
-
-    for (let i = currentHour + 4; i < 24; i++) {
-        html += createHourlyForecastHtml(weather, 0, i, className1, className2);
-    } // parameters 0 and 1 are the index of the day. 0 = today 1 = tomorrow.
-    for (let i = 0; i < currentHour; i++) {
-        html += createHourlyForecastHtml(weather, 1, i, className1, className2);
+    for (let i = currentHour + 1; i < 24; i++) {
+        html += createHourlyForecastHtml(weather, 0, i, "", "")
     }
-
+    for (let i = 0; i < currentHour; i++) {
+        html += createHourlyForecastHtml(weather, 1, i, "", "");
+    }
     return html;
 }
+
+// renders the forecast of the next three hours
+// function renderfirstThreeHoursForecast(weather) {
+//     let html = '';
+//     const currentHour = getCurrentHour(weather);
+//     for (let i = currentHour + 1; i < currentHour + 4; i++) {
+//         // the "" are for prevent undefined classnames
+//         html += createHourlyForecastHtml(weather, 0, i, "", "");
+//     }
+//     return html;
+// }
+// function renderRestHoursForecast(weather) {
+//     let html = '';
+//     let className1 = "js-rest-hours" // for the showRestHoursForecast()
+//     let className2 = "invisible" // display: none;
+//     const currentHour = getCurrentHour(weather);
+
+//     for (let i = currentHour + 4; i < 24; i++) {
+//         html += createHourlyForecastHtml(weather, 0, i, className1, className2);
+//     } // parameters 0 and 1 are the index of the day. 0 = today 1 = tomorrow.
+//     for (let i = 0; i < currentHour; i++) {
+//         html += createHourlyForecastHtml(weather, 1, i, className1, className2);
+//     }
+
+//     return html;
+// }
 // --------------------------------- The main render function --------------------------------------
 function renderResponse(weather) {
     let html = ``;
@@ -278,8 +291,9 @@ function renderResponse(weather) {
         $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
-        $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
-        $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather)
+        $hoursForecastContainer.innerHTML = renderTwentyFourHoursForecast(weather);
+        // $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
+        // $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather);
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
         // load user's current position
