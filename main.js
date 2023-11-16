@@ -228,15 +228,15 @@ function createHourlyForecastHtml(weather, day, hour, className1, className2) {
                 <h2 class="section-one-hour-forecast-heading">${hourlyData.temp_c}°C</h2>
                 <img src="https:${hourlyData.condition.icon}" alt="${hourlyData.condition.text}"/>
             </div>
-            <p>${hourlyData.condition.text}</p>
-            <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
-            <p>Szélsebesség: ${hourlyData.wind_kph}km/h</p>        
-            <p>Csapadék: ${hourlyData.precip_mm}mm</p>
-            <div>
-                <p>Széllökés: ${hourlyData.gust_kph}km/h</p>        
-                <p>Légnyomás: ${hourlyData.pressure_mb}hPa</p>        
-                <p>Páratartalom: ${hourlyData.humidity}%</p>        
-                <p>Látótávolság: ${hourlyData.vis_km}km</p>  
+            <div class"= hourly-forecast-div>
+                <p>${hourlyData.condition.text}</p>
+                <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
+                <p>Szélseb.: ${hourlyData.wind_kph}km/h</p>        
+                <p>Csapadék: ${hourlyData.precip_mm}mm</p>
+                <p>Széllök.: ${hourlyData.gust_kph}km/h</p>        
+                <p>Légny.: ${hourlyData.pressure_mb}hPa</p>        
+                <p>Páratart.: ${hourlyData.humidity}%</p>        
+                <p>Látótáv.: ${hourlyData.vis_km}km</p>  
             </div>
         </section>
     `;

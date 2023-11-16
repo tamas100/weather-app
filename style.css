@@ -387,12 +387,27 @@ a {
   /* font size is adapted to the parent container */
 }
 
+.hourly-today-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
 .section-one-hour-forecast-heading-div {
   container-type: inline-size; /* to use container query units */
 }
 
 .section-one-hour-forecast-heading {
   font-size: clamp(2.4rem, 19cqi, 3.3rem);
+}
+
+.hourly-forecast-div {
+  text-align: left;
+}
+
+.hourly-forecast-div p {
+  font-size: 1.6rem;
 }
 /*--------------- Footer --------------------------------------------------*/
 
