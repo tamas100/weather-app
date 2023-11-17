@@ -18,6 +18,7 @@ const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
 const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button");
 const $navMenuList = document.querySelector(".js-nav-menu-list");
 const $hamburgerIcon = document.querySelector(".bi-list");
+const $paginationLinks = document.querySelectorAll(".pagination > p");
 
 let savedCities = JSON.parse(localStorage.getItem("savedCities")); // retrieve the array from localStorage
 
@@ -244,6 +245,15 @@ function createHourlyForecastHtml(weather, day, hour, serialNumber) {
 }
 
 //TODO  pagination
+function toggleActivePagination(event) {
+    document.querySelector(".pagination > .active").classList.toggle("active");
+    event.target.classList.toggle("active");
+}
+
+function handlePagination(event) {
+    toggleActivePagination(event);
+}
+
 function renderTwentyFourHoursForecast(weather) {
     const currentHour = getCurrentHour(weather);
     let html = '';
@@ -418,8 +428,8 @@ $container.addEventListener("click", renderWeatherDetails);
 [...$twentyFourHoursForecastButtons]
     .forEach(button => button.addEventListener("click", showRestHoursForecast));
 $hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
-// clicks work on the navMenuList as well
-$navMenuList.addEventListener("click", toggleHamburgerMenu);
+$navMenuList.addEventListener("click", toggleHamburgerMenu); // clicks work on the navMenuList as well
+[...$paginationLinks].forEach(p => p.addEventListener("click", handlePagination));
 
 getUserPosition();
 loadLocalSavedCities();
