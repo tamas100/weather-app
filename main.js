@@ -218,10 +218,10 @@ function getCurrentHour(weather) {
     return parseInt(weather.location.localtime.slice(11, 13));
 }
 // returns the html of one hour forecast
-function createHourlyForecastHtml(weather, day, hour, className1, className2) {
+function createHourlyForecastHtml(weather, day, hour, serialNumber) {
     let hourlyData = weather.forecast.forecastday[day].hour[hour];
     let html = `
-        <section class="js-section-one-hour-forecast section-one-hour-forecast ${className1} ${className2}">
+        <section class="js-section-one-hour-forecast section-one-hour-forecast" data-serial-number="${serialNumber}">
             ${/*extracts the time from a string*/''}
             <p class="time-p">${hourlyData.time.slice(11)}</p>   
             <div class="section-one-hour-forecast-heading-div">
@@ -245,13 +245,17 @@ function createHourlyForecastHtml(weather, day, hour, className1, className2) {
 
 //TODO  pagination
 function renderTwentyFourHoursForecast(weather) {
-    let html = '';
     const currentHour = getCurrentHour(weather);
+    let html = '';
+    let j = 1;
+    let k = 24 - currentHour;
     for (let i = currentHour + 1; i < 24; i++) {
-        html += createHourlyForecastHtml(weather, 0, i, "", "")
+        html += createHourlyForecastHtml(weather, 0, i, j);
+        j++;
     }
     for (let i = 0; i < currentHour; i++) {
-        html += createHourlyForecastHtml(weather, 1, i, "", "");
+        html += createHourlyForecastHtml(weather, 1, i, k);
+        k++;
     }
     return html;
 }
