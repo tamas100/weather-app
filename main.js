@@ -246,12 +246,19 @@ function createHourlyForecastHtml(weather, day, hour, serialNumber) {
 
 //TODO  pagination
 function toggleActivePagination(event) {
-    document.querySelector(".pagination > .active").classList.toggle("active");
-    event.target.classList.toggle("active");
+    if (!Number.isNaN(parseInt(event.target.innerText))) {
+        document.querySelector(".pagination > .active").classList.toggle("active");
+        event.target.classList.toggle("active");
+    }
+}
+
+function renderHourlyForecast(event) {
+
 }
 
 function handlePagination(event) {
     toggleActivePagination(event);
+    renderHourlyForecast(event);
 }
 
 function renderTwentyFourHoursForecast(weather) {
