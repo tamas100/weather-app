@@ -419,6 +419,15 @@ a {
   padding: 0.8rem 1.4rem;
   text-decoration: none;
 }
+
+.pagination a.active {
+  background-color: var(--main-grey);
+  color: var(--main-white);
+}
+
+.pagination a:hover:not(.active) {
+  background-color: var(--main-blue);
+}
 /*--------------- Footer --------------------------------------------------*/
 
 footer {
