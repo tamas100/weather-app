@@ -174,9 +174,6 @@ a {
 
 .navbar a:hover {
   cursor: pointer;
-}
-
-.navbar a:active {
   color: var(--main-yellow);
 }
 
@@ -508,7 +505,7 @@ footer {
     color: var(--main-grey);
   }
 
-  .navbar a:active {
+  .navbar a:hover {
     color: var(--main-blue);
   }
 }
