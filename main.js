@@ -219,10 +219,10 @@ function getCurrentHour(weather) {
     return parseInt(weather.location.localtime.slice(11, 13));
 }
 // returns the html of one hour forecast
-function createHourlyForecastHtml(weather, day, hour, serialNumber) {
+function createHourlyForecastHtml(weather, day, hour, serialNumber, className) {
     let hourlyData = weather.forecast.forecastday[day].hour[hour];
     let html = `
-        <section class="js-section-one-hour-forecast section-one-hour-forecast" data-serial-number="${serialNumber}">
+        <section class="js-section-one-hour-forecast section-one-hour-forecast ${className}" data-serialNumber="${serialNumber}">
             ${/*extracts the time from a string*/''}
             <p class="time-p">${hourlyData.time.slice(11)}</p>   
             <div class="section-one-hour-forecast-heading-div">
@@ -244,37 +244,68 @@ function createHourlyForecastHtml(weather, day, hour, serialNumber) {
     return html;
 }
 
-//TODO  pagination
 function toggleActivePagination(event) {
-    if (!Number.isNaN(parseInt(event.target.innerText))) {
-        document.querySelector(".pagination > .active").classList.toggle("active");
-        event.target.classList.toggle("active");
+    document.querySelector(".pagination > .active").classList.toggle("active");
+    event.target.classList.toggle("active");
+}
+
+function renderHourlyForecast(number) { // TODO write a function insted of the many if-s
+    if (number === 1) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='1'], [data-serialNumber='2'], [data-serialNumber='3'], [data-serialNumber='4']")]
+            .forEach(div => div.classList.toggle("invisible"));
+    } else if (number === 2) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='5'], [data-serialNumber='6'], [data-serialNumber='7'], [data-serialNumber='8']")]
+            .forEach(div => div.classList.toggle("invisible"));
+    } else if (number === 3) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='9'], [data-serialNumber='10'], [data-serialNumber='11'], [data-serialNumber='12']")]
+            .forEach(div => div.classList.toggle("invisible"));
+    } else if (number === 4) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='13'], [data-serialNumber='14'], [data-serialNumber='15'], [data-serialNumber='16']")]
+            .forEach(div => div.classList.toggle("invisible"));
+    } else if (number === 5) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='17'], [data-serialNumber='18'], [data-serialNumber='19'], [data-serialNumber='20']")]
+            .forEach(div => div.classList.toggle("invisible"));
+    } else if (number === 6) {
+        [...document.querySelectorAll("[data-serialNumber]")]
+            .forEach(div => div.classList.add("invisible"));
+        [...document.querySelectorAll("[data-serialNumber='21'], [data-serialNumber='22'], [data-serialNumber='23'], [data-serialNumber='24']")]
+            .forEach(div => div.classList.toggle("invisible"));
     }
 }
 
-function renderHourlyForecast(event) {
-
-}
-
 function handlePagination(event) {
-    toggleActivePagination(event);
-    renderHourlyForecast(event);
+    if (!Number.isNaN(parseInt(event.target.innerText))) {
+        toggleActivePagination(event);
+        renderHourlyForecast(parseInt(event.target.innerText));
+    }
 }
 
-function renderTwentyFourHoursForecast(weather) {
+function renderTwentyFourHoursForecast(weather, number) {
     const currentHour = getCurrentHour(weather);
     let html = '';
     let j = 1;
     let k = 24 - currentHour;
+    let className = "invisible";
     for (let i = currentHour + 1; i < 24; i++) {
-        html += createHourlyForecastHtml(weather, 0, i, j);
+        html += createHourlyForecastHtml(weather, 0, i, j, className);
         j++;
     }
     for (let i = 0; i < currentHour; i++) {
-        html += createHourlyForecastHtml(weather, 1, i, k);
+        html += createHourlyForecastHtml(weather, 1, i, k, className);
         k++;
     }
     return html;
+    renderHourlyForecast(number)
 }
 
 // renders the forecast of the next three hours
@@ -312,7 +343,7 @@ function renderResponse(weather) {
         $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
-        $hoursForecastContainer.innerHTML = renderTwentyFourHoursForecast(weather);
+        $hoursForecastContainer.innerHTML = renderTwentyFourHoursForecast(weather, 1);
         // $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
         // $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather);
     } else {
