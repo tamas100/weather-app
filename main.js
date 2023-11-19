@@ -230,7 +230,7 @@ function createHourlyForecastHtml(weather, day, hour, serialNumber, className) {
                 <img src="https:${hourlyData.condition.icon}" alt="${hourlyData.condition.text}"/>
             </div>
             <div class"= hourly-forecast-div>
-                <p>${hourlyData.condition.text}</p>
+                <p class="hourly-cond-text">${hourlyData.condition.text}</p>
                 <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
                 <p>Szélseb.: ${hourlyData.wind_kph}km/h</p>        
                 <p>Csapadék: ${hourlyData.precip_mm}mm</p>
@@ -300,7 +300,7 @@ function renderTwentyFourHoursForecast(weather, number) {
         html += createHourlyForecastHtml(weather, 0, i, j, className);
         j++;
     }
-    for (let i = 0; i < currentHour; i++) {
+    for (let i = 0; i < currentHour + 1; i++) {
         html += createHourlyForecastHtml(weather, 1, i, k, className);
         k++;
     }

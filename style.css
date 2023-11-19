@@ -407,6 +407,10 @@ a {
   font-size: 1.6rem;
 }
 
+.hourly-cond-text {
+  max-width: 16rem;
+}
+
 /*--------------- Pagination --------------------------------------------------*/
 .pagination {
   display: inline-block;
