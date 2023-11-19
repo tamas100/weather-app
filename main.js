@@ -250,37 +250,10 @@ function toggleActivePagination(event) {
 }
 
 function renderHourlyForecast(number) { // TODO write a function insted of the many if-s
-    if (number === 1) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='1'], [data-serialNumber='2'], [data-serialNumber='3'], [data-serialNumber='4']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    } else if (number === 2) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='5'], [data-serialNumber='6'], [data-serialNumber='7'], [data-serialNumber='8']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    } else if (number === 3) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='9'], [data-serialNumber='10'], [data-serialNumber='11'], [data-serialNumber='12']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    } else if (number === 4) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='13'], [data-serialNumber='14'], [data-serialNumber='15'], [data-serialNumber='16']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    } else if (number === 5) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='17'], [data-serialNumber='18'], [data-serialNumber='19'], [data-serialNumber='20']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    } else if (number === 6) {
-        [...document.querySelectorAll("[data-serialNumber]")]
-            .forEach(div => div.classList.add("invisible"));
-        [...document.querySelectorAll("[data-serialNumber='21'], [data-serialNumber='22'], [data-serialNumber='23'], [data-serialNumber='24']")]
-            .forEach(div => div.classList.toggle("invisible"));
-    }
+    [...document.querySelectorAll("[data-serialNumber]")]
+        .forEach(div => div.classList.add("invisible"));
+    [...document.querySelectorAll(`[data-serialNumber='${number * 4 - 3}'], [data-serialNumber='${number * 4 - 2}'], [data-serialNumber='${number * 4 - 1}'], [data-serialNumber='${number * 4}']`)]
+        .forEach(div => div.classList.toggle("invisible"));
 }
 
 function handlePagination(event) {
@@ -290,7 +263,7 @@ function handlePagination(event) {
     }
 }
 
-function renderTwentyFourHoursForecast(weather, number) {
+function renderTwentyFourHoursForecast(weather) {
     const currentHour = getCurrentHour(weather);
     let html = '';
     let j = 1;
@@ -305,34 +278,7 @@ function renderTwentyFourHoursForecast(weather, number) {
         k++;
     }
     return html;
-    renderHourlyForecast(number)
 }
-
-// renders the forecast of the next three hours
-// function renderfirstThreeHoursForecast(weather) {
-//     let html = '';
-//     const currentHour = getCurrentHour(weather);
-//     for (let i = currentHour + 1; i < currentHour + 4; i++) {
-//         // the "" are for prevent undefined classnames
-//         html += createHourlyForecastHtml(weather, 0, i, "", "");
-//     }
-//     return html;
-// }
-// function renderRestHoursForecast(weather) {
-//     let html = '';
-//     let className1 = "js-rest-hours" // for the showRestHoursForecast()
-//     let className2 = "invisible" // display: none;
-//     const currentHour = getCurrentHour(weather);
-
-//     for (let i = currentHour + 4; i < 24; i++) {
-//         html += createHourlyForecastHtml(weather, 0, i, className1, className2);
-//     } // parameters 0 and 1 are the index of the day. 0 = today 1 = tomorrow.
-//     for (let i = 0; i < currentHour; i++) {
-//         html += createHourlyForecastHtml(weather, 1, i, className1, className2);
-//     }
-
-//     return html;
-// }
 // --------------------------------- The main render function --------------------------------------
 function renderResponse(weather) {
     let html = ``;
@@ -344,8 +290,7 @@ function renderResponse(weather) {
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
         $hoursForecastContainer.innerHTML = renderTwentyFourHoursForecast(weather, 1);
-        // $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
-        // $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather);
+        renderHourlyForecast(1);
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
         // load user's current position
