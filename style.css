@@ -389,6 +389,7 @@ a {
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem;
+  min-height: 35rem;
 }
 
 .section-one-hour-forecast-heading-div {
