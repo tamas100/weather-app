@@ -244,12 +244,22 @@ function createHourlyForecastHtml(weather, day, hour, serialNumber, className) {
     return html;
 }
 
+function handlePaginationRight(number) {
+    document.querySelector(".pagination > .active").classList.toggle("active")
+    document.querySelector(`[data-page='${number + 1}']`).classList.toggle("active");
+}
+
+function handlePaginationLeft(number) {
+    document.querySelector(".pagination > .active").classList.toggle("active")
+    document.querySelector(`[data-page='${number - 1}']`).classList.toggle("active");
+}
+
 function toggleActivePagination(event) {
     document.querySelector(".pagination > .active").classList.toggle("active");
     event.target.classList.toggle("active");
 }
 
-function renderHourlyForecast(number) { // TODO write a function insted of the many if-s
+function renderHourlyForecast(number) {
     [...document.querySelectorAll("[data-serialNumber]")]
         .forEach(div => div.classList.add("invisible"));
     [...document.querySelectorAll(`[data-serialNumber='${number * 4 - 3}'], [data-serialNumber='${number * 4 - 2}'], [data-serialNumber='${number * 4 - 1}'], [data-serialNumber='${number * 4}']`)]
@@ -260,6 +270,16 @@ function handlePagination(event) {
     if (!Number.isNaN(parseInt(event.target.innerText))) {
         toggleActivePagination(event);
         renderHourlyForecast(parseInt(event.target.innerText));
+    } else if (event.target.innerText === '<') {
+        if (!((document.querySelector(".active").innerText) === '1')) {
+            handlePaginationLeft(parseInt(document.querySelector(".active").innerText));
+            renderHourlyForecast(parseInt(document.querySelector(".active").innerText));
+        }
+    } else if (event.target.innerText === '>') {
+        if (!((document.querySelector(".active").innerText) === '6')) {
+            handlePaginationRight(parseInt(document.querySelector(".active").innerText));
+            renderHourlyForecast(parseInt(document.querySelector(".active").innerText));
+        }
     }
 }
 
