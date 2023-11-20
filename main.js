@@ -18,6 +18,7 @@ const $nextHoursParagraph = document.querySelector(".js-next-hours-p");
 const $hamburgerMenuButton = document.querySelector(".js-hamburger-menu-button");
 const $navMenuList = document.querySelector(".js-nav-menu-list");
 const $hamburgerIcon = document.querySelector(".bi-list");
+const $paginationLinks = document.querySelectorAll(".pagination > p");
 
 let savedCities = JSON.parse(localStorage.getItem("savedCities")); // retrieve the array from localStorage
 
@@ -218,54 +219,84 @@ function getCurrentHour(weather) {
     return parseInt(weather.location.localtime.slice(11, 13));
 }
 // returns the html of one hour forecast
-function createHourlyForecastHtml(weather, day, hour, className1, className2) {
+function createHourlyForecastHtml(weather, day, hour, serialNumber, className) {
     let hourlyData = weather.forecast.forecastday[day].hour[hour];
     let html = `
-        <section class="js-section-one-hour-forecast section-one-hour-forecast ${className1} ${className2}">
+        <section class="js-section-one-hour-forecast section-one-hour-forecast ${className}" data-serialNumber="${serialNumber}">
             ${/*extracts the time from a string*/''}
             <p class="time-p">${hourlyData.time.slice(11)}</p>   
             <div class="section-one-hour-forecast-heading-div">
                 <h2 class="section-one-hour-forecast-heading">${hourlyData.temp_c}°C</h2>
                 <img src="https:${hourlyData.condition.icon}" alt="${hourlyData.condition.text}"/>
             </div>
-            <p>${hourlyData.condition.text}</p>
-            <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
-            <p>Szélsebesség: ${hourlyData.wind_kph}km/h</p>        
-            <p>Csapadék: ${hourlyData.precip_mm}mm</p>
-            <div>
-                <p>Széllökés: ${hourlyData.gust_kph}km/h</p>        
-                <p>Légnyomás: ${hourlyData.pressure_mb}hPa</p>        
-                <p>Páratartalom: ${hourlyData.humidity}%</p>        
-                <p>Látótávolság: ${hourlyData.vis_km}km</p>  
-            </div>
-        </section>
-    `;
+            <div class"= hourly-forecast-div>
+                <p class="hourly-cond-text">${hourlyData.condition.text}</p>
+                <p>Hőérzet: ${hourlyData.feelslike_c}°C</p>
+                <p>Szélseb.: ${hourlyData.wind_kph}km/h</p>        
+                <p>Csapadék: ${hourlyData.precip_mm}mm</p>
+                <p>Széllök.: ${hourlyData.gust_kph}km/h</p>        
+                <p>Légny.: ${hourlyData.pressure_mb}hPa</p>        
+                <p>Páratart.: ${hourlyData.humidity}%</p>        
+                <p>Látótáv.: ${hourlyData.vis_km}km</p>  
+                </div>
+                </section>
+                `;
     return html;
 }
-// renders the forecast of the next three hours
-function renderfirstThreeHoursForecast(weather) {
-    let html = '';
-    const currentHour = getCurrentHour(weather);
-    for (let i = currentHour + 1; i < currentHour + 4; i++) {
-        // the "" are for prevent undefined classnames
-        html += createHourlyForecastHtml(weather, 0, i, "", "");
-    }
-    return html;
+
+function handlePaginationRight(number) {
+    document.querySelector(".pagination > .active").classList.toggle("active")
+    document.querySelector(`[data-page='${number + 1}']`).classList.toggle("active");
 }
-//TODO  pagination
-function renderRestHoursForecast(weather) {
-    let html = '';
-    let className1 = "js-rest-hours" // for the showRestHoursForecast()
-    let className2 = "invisible" // display: none;
-    const currentHour = getCurrentHour(weather);
 
-    for (let i = currentHour + 4; i < 24; i++) {
-        html += createHourlyForecastHtml(weather, 0, i, className1, className2);
-    } // parameters 0 and 1 are the index of the day. 0 = today 1 = tomorrow.
-    for (let i = 0; i < currentHour; i++) {
-        html += createHourlyForecastHtml(weather, 1, i, className1, className2);
+function handlePaginationLeft(number) {
+    document.querySelector(".pagination > .active").classList.toggle("active")
+    document.querySelector(`[data-page='${number - 1}']`).classList.toggle("active");
+}
+
+function toggleActivePagination(event) {
+    document.querySelector(".pagination > .active").classList.toggle("active");
+    event.target.classList.toggle("active");
+}
+
+function renderHourlyForecast(number) {
+    [...document.querySelectorAll("[data-serialNumber]")]
+        .forEach(div => div.classList.add("invisible"));
+    [...document.querySelectorAll(`[data-serialNumber='${number * 4 - 3}'], [data-serialNumber='${number * 4 - 2}'], [data-serialNumber='${number * 4 - 1}'], [data-serialNumber='${number * 4}']`)]
+        .forEach(div => div.classList.toggle("invisible"));
+}
+
+function handlePagination(event) {
+    if (!Number.isNaN(parseInt(event.target.innerText))) {
+        toggleActivePagination(event);
+        renderHourlyForecast(parseInt(event.target.innerText));
+    } else if (event.target.innerText === '<') {
+        if (!((document.querySelector(".active").innerText) === '1')) {
+            handlePaginationLeft(parseInt(document.querySelector(".active").innerText));
+            renderHourlyForecast(parseInt(document.querySelector(".active").innerText));
+        }
+    } else if (event.target.innerText === '>') {
+        if (!((document.querySelector(".active").innerText) === '6')) {
+            handlePaginationRight(parseInt(document.querySelector(".active").innerText));
+            renderHourlyForecast(parseInt(document.querySelector(".active").innerText));
+        }
     }
+}
 
+function renderTwentyFourHoursForecast(weather) {
+    const currentHour = getCurrentHour(weather);
+    let html = '';
+    let j = 1;
+    let k = 24 - currentHour;
+    let className = "invisible";
+    for (let i = currentHour + 1; i < 24; i++) {
+        html += createHourlyForecastHtml(weather, 0, i, j, className);
+        j++;
+    }
+    for (let i = 0; i < currentHour + 1; i++) {
+        html += createHourlyForecastHtml(weather, 1, i, k, className);
+        k++;
+    }
     return html;
 }
 // --------------------------------- The main render function --------------------------------------
@@ -278,8 +309,8 @@ function renderResponse(weather) {
         $forecastTodayContainer.innerHTML = `${renderForecastToday(weather)}`;
         $forecastTomorrowContainer.innerHTML = renderForecastTomorrow(weather);
         $forecastDayAfterTomorrowContainer.innerHTML = renderForecastDayAfterTomorrow(weather);
-        $hoursForecastContainer.innerHTML = renderfirstThreeHoursForecast(weather);
-        $hoursForecastContainer.innerHTML += renderRestHoursForecast(weather)
+        $hoursForecastContainer.innerHTML = renderTwentyFourHoursForecast(weather, 1);
+        renderHourlyForecast(1);
     } else {
         $errorSection.innerHTML = `<p>Sajnálom, nem találtam ilyen nevű települést!<i id="button-icon" class="bi bi-x"></i></p>`;
         // load user's current position
@@ -400,8 +431,8 @@ $container.addEventListener("click", renderWeatherDetails);
 [...$twentyFourHoursForecastButtons]
     .forEach(button => button.addEventListener("click", showRestHoursForecast));
 $hamburgerMenuButton.addEventListener("click", toggleHamburgerMenu);
-// clicks work on the navMenuList as well
-$navMenuList.addEventListener("click", toggleHamburgerMenu);
+$navMenuList.addEventListener("click", toggleHamburgerMenu); // clicks work on the navMenuList as well
+[...$paginationLinks].forEach(p => p.addEventListener("click", handlePagination));
 
 getUserPosition();
 loadLocalSavedCities();

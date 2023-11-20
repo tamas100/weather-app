@@ -113,30 +113,27 @@
           </button>
         </div>
       </section>
-      <!------------------------ Hourly forecast ------------------------------------------------------->
+      <!------------------------ Hourly forecast Pagination ------------------------------------------------------->
       <section
         id="hourly-forecast"
         class="js-hourly-forecast-section hourly-forecast-section"
       >
         <div class="hourly-forecast-heading-div">
           <h3 class="hourly-forecast-heading">Óránkénti előrejelzés</h3>
-          <button
-            class="js-twenty-four-hours-forecast-button twenty-four-hours-forecast-button btn btn-primary"
-            type="button"
-          >
-            24 órás előrejelzés
-          </button>
+          <div class="pagination">
+            <p><</p>
+            <p class="active" data-page="1">1</p>
+            <p data-page="2">2</p>
+            <p data-page="3">3</p>
+            <p data-page="4">4</p>
+            <p data-page="5">5</p>
+            <p data-page="6">6</p>
+            <p>></p>
+          </div>
         </div>
-        <p class="js-next-hours-p next-hours-p">Következő 3 óra</p>
         <div class="js-hourly-forecast-div hourly-forecast-div">
           <div class="js-hourly-today-div hourly-today-div"></div>
         </div>
-        <button
-          class="js-twenty-four-hours-forecast-button twenty-four-hours-forecast-button btn btn-primary"
-          type="button"
-        >
-          24 órás előrejelzés
-        </button>
       </section>
     </main>
     <!------------------------ Footer ------------------------------------------------------->
